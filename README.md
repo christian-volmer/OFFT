@@ -30,16 +30,18 @@ A typical use model for a one-dimensional transform looks like this
 ```
 The `1`s in the argument list to the `Transform()` method signify the stride of the data. In our example the stride is 1, because we assume that the samples occupy adjacent memory locations.
 
+**Note that, currently, transform cannot be performed in-place.** That means, the source and the destination arrays of the transform must not overlap in memory.
+
 Above code will compute the forward FFT according to the following convention
 
 $$
-X_k = \sum_{i=0}^{N-1} x_i \\; e^{+2\pi\mathrm{j}\\,ik/N}
+X_k = \sum_{i=0}^{N-1} x_i \ e^{+2\pi\mathrm{j}\ ik/N}
 $$
 
 The inverse FFT can be computed with the member function `InverseTransform()` as
 
 $$
-x_i = \frac{1}{N} \sum_{k=0}^{N-1} X_k \\; e^{-2\pi\mathrm{j}\\,ik/N}
+x_i = \frac{1}{N} \sum_{k=0}^{N-1} X_k \ e^{-2\pi\mathrm{j}\ ik/N}
 $$
 
 Complete code examples, also for multi-dimensional transforms can be found in the `examples` sub-directory.
