@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="backend\fourier_base.h" />
+    <ClInclude Include="backend\module_base.h" />
+    <ClInclude Include="backend\module_manager.h" />
+    <ClInclude Include="backend\phasors.h" />
+    <ClInclude Include="backend\program.h" />
+    <ClInclude Include="backend\rader_module.h" />
+    <ClInclude Include="backend\standard_module.h" />
+    <ClInclude Include="backend\storage.h" />
+    <ClInclude Include="fourier.h" />
+    <ClInclude Include="fourier_parameters.h" />
+    <ClInclude Include="math\even_q.h" />
+    <ClInclude Include="math\extended_gcd.h" />
+    <ClInclude Include="math\factor_integer.h" />
+    <ClInclude Include="math\gcd.h" />
+    <ClInclude Include="math\list_product.h" />
+    <ClInclude Include="math\miller_rabin_probable_prime_q.h" />
+    <ClInclude Include="math\mod.h" />
+    <ClInclude Include="math\odd_q.h" />
+    <ClInclude Include="math\power_mod.h" />
+    <ClInclude Include="math\prime_q.h" />
+    <ClInclude Include="math\primitive_root.h" />
+    <ClInclude Include="math\times_plus_mod.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="backend\fourier_base.cpp" />
+    <ClCompile Include="backend\module_manager.cpp" />
+    <ClCompile Include="backend\phasors.cpp" />
+    <ClCompile Include="backend\program.cpp" />
+    <ClCompile Include="backend\rader_module.cpp" />
+    <ClCompile Include="backend\standard_modules\module_10.cpp" />
+    <ClCompile Include="backend\standard_modules\module_11.cpp" />
+    <ClCompile Include="backend\standard_modules\module_12.cpp" />
+    <ClCompile Include="backend\standard_modules\module_13.cpp" />
+    <ClCompile Include="backend\standard_modules\module_14.cpp" />
+    <ClCompile Include="backend\standard_modules\module_15.cpp" />
+    <ClCompile Include="backend\standard_modules\module_16.cpp" />
+    <ClCompile Include="backend\standard_modules\module_17.cpp" />
+    <ClCompile Include="backend\standard_modules\module_18.cpp" />
+    <ClCompile Include="backend\standard_modules\module_19.cpp" />
+    <ClCompile Include="backend\standard_modules\module_2.cpp" />
+    <ClCompile Include="backend\standard_modules\module_20.cpp" />
+    <ClCompile Include="backend\standard_modules\module_21.cpp" />
+    <ClCompile Include="backend\standard_modules\module_22.cpp" />
+    <ClCompile Include="backend\standard_modules\module_23.cpp" />
+    <ClCompile Include="backend\standard_modules\module_24.cpp" />
+    <ClCompile Include="backend\standard_modules\module_25.cpp" />
+    <ClCompile Include="backend\standard_modules\module_26.cpp" />
+    <ClCompile Include="backend\standard_modules\module_27.cpp" />
+    <ClCompile Include="backend\standard_modules\module_28.cpp" />
+    <ClCompile Include="backend\standard_modules\module_29.cpp" />
+    <ClCompile Include="backend\standard_modules\module_3.cpp" />
+    <ClCompile Include="backend\standard_modules\module_30.cpp" />
+    <ClCompile Include="backend\standard_modules\module_31.cpp" />
+    <ClCompile Include="backend\standard_modules\module_32.cpp" />
+    <ClCompile Include="backend\standard_modules\module_4.cpp" />
+    <ClCompile Include="backend\standard_modules\module_5.cpp" />
+    <ClCompile Include="backend\standard_modules\module_6.cpp" />
+    <ClCompile Include="backend\standard_modules\module_7.cpp" />
+    <ClCompile Include="backend\standard_modules\module_8.cpp" />
+    <ClCompile Include="backend\standard_modules\module_9.cpp" />
+    <ClCompile Include="backend\storage.cpp" />
+    <ClCompile Include="fourier_parameters.cpp" />
+    <ClCompile Include="math\even_q.cpp" />
+    <ClCompile Include="math\extended_gcd.cpp" />
+    <ClCompile Include="math\factor_integer.cpp" />
+    <ClCompile Include="math\gcd.cpp" />
+    <ClCompile Include="math\list_product.cpp" />
+    <ClCompile Include="math\miller_rabin_probable_prime_q.cpp" />
+    <ClCompile Include="math\mod.cpp" />
+    <ClCompile Include="math\odd_q.cpp" />
+    <ClCompile Include="math\power_mod.cpp" />
+    <ClCompile Include="math\prime_q.cpp" />
+    <ClCompile Include="math\primitive_root.cpp" />
+    <ClCompile Include="math\times_plus_mod.cpp" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{43A3FF8E-B9AD-4EFD-954A-D59419B54A1A}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>offt</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level4</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeaderFile>
+      </PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

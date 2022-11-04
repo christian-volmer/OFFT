@@ -1,0 +1,55 @@
+
+//          Copyright Christian Volmer 2022.
+// Distributed under the Boost Software License, Version 1.0.
+//    (See accompanying file LICENSE_1_0.txt or copy at
+//          https://www.boost.org/LICENSE_1_0.txt)
+
+#include "../standard_module.h"
+
+namespace offt {
+namespace backend {
+
+using std::size_t;
+using std::ptrdiff_t;
+
+template<typename valueT>
+static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement)
+{
+	valueT t1, t2, t3, t4, t5, t6, t9, t10;
+
+	phasors.Multiply(t1, t2, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
+	phasors.Multiply(t3, t4, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
+	phasors.Multiply(t5, t6, pReal[2 * stride], pImag[2 * stride], twiddleStart + 2 * twiddleIncrement);
+
+	t9 = t3 - t5;
+	t10 = t4 - t6;
+	t3 += t5;
+	t4 += t6;
+	t1 += t3;
+	t2 += t4;
+	t10 *= valueT(0.86602540378443864676);
+	t9 *= valueT(0.86602540378443864676);
+	t3 *= valueT(1.5);
+	t4 *= valueT(1.5);
+	t3 = t1 - t3;
+	t4 = t2 - t4;
+	pReal[0 * stride] = t1;
+	pImag[0 * stride] = t2;
+	pReal[1 * stride] = t3 - t10;
+	pImag[1 * stride] = t4 + t9;
+	pReal[2 * stride] = t3 + t10;
+	pImag[2 * stride] = t4 - t9;
+}
+
+template<> void StandardModule<float, 3>::Compute(float *pReal, float *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
+{
+	ComputeCore(mPhasors, pReal, pImag, stride, twiddleStart, twiddleIncrement);
+}
+
+template<> void StandardModule<double, 3>::Compute(double *pReal, double *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
+{
+	ComputeCore(mPhasors, pReal, pImag, stride, twiddleStart, twiddleIncrement);
+}
+
+}
+}
