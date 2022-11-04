@@ -18,6 +18,8 @@ In order to do the actual transform fast, “offt” needs to perform some preco
 
 A typical use model for a one-dimensional transform looks like this
 ```
+    #include <offt/fourier.h>
+    ...
     std::size_t length = 1000; // Number of complex samples in both time- and frequency-domain
     Fourier<> fourier(length); // This does all the necessary pre-computations
     ...
@@ -29,12 +31,15 @@ A typical use model for a one-dimensional transform looks like this
 The `1`s in the argument list to the `Transform()` method signify the stride of the data. In our example the stride is 1, because we assume that the samples occupy adjacent memory locations.
 
 Above code will compute the forward FFT according to the following convention
+
 $$
-X_k = \sum_{i=0}^{N-1} x_i \; e^{+2\pi\mathrm{j}\,ik/N}.
+X_k = \sum_{i=0}^{N-1} x_i \\; e^{+2\pi\mathrm{j}\\,ik/N}
 $$
+
 The inverse FFT can be computed with the member function `InverseTransform()` as
+
 $$
-x_i = \frac{1}{N} \sum_{k=0}^{N-1} X_k \; e^{-2\pi\mathrm{j}\,ik/N}.
+x_i = \frac{1}{N} \sum_{k=0}^{N-1} X_k \\; e^{-2\pi\mathrm{j}\\,ik/N}
 $$
 
 Complete code examples, also for multi-dimensional transforms can be found in the `examples` sub-directory.
@@ -42,15 +47,14 @@ Complete code examples, also for multi-dimensional transforms can be found in th
 # The directory structure
 
 This project repository is structured as follows
+
 ```
 root
   + examples
-  |   + demo1 ............ simple demo for a one-dimensional transform
-  |   + benchmark ........ benchmark that runs transforms of random depth and dimensions and measures various performance metrics
+  |   + benchmark ........ benchmark that runs transforms of random depth and dimensions
+  |   + demo ............. simple demo for a one-dimensional transform  
   + libs
-      + offt .......... the “offt” library
-          + include ...... public header files
-          + src .......... library source code
+      + offt ............. the “offt” library
 ```
 
 # Build and run
@@ -63,7 +67,7 @@ I am using “Visual Studio Express 2017 for Windows Desktop” for development.
 
 CMake is a cross-platform build environment. See <https://cmake.org> for more information.
 
-I do *not* use CMake on a daily basis and it is *not* that easy to use. Below information is to get you started, but it cannot substitute for a more thorough study of the CMake tool flow. I tested this on Windows with both the Microsoft compiler and the Windows-port of the GNU compiler, MinGW-64, from the MSYS2 distribution, see <https://www.msys2.org>.
+I do not use CMake myself, but below information should work to get you started. I tested this on Windows with both the Microsoft compiler and the Windows-port of the GNU compiler, MinGW-64, from the MSYS2 distribution, see <https://www.msys2.org>.
 
 I am assuming that you already created an (empty) directory called `build` below the root of this repository. Both CMake and the compiler must be on the system path. From within `build`, run
 ```
@@ -81,7 +85,7 @@ If your compiler is GNU, you will have to specify the build configuration during
 ```
 cmake -D CMAKE_BUILD_TYPE=Release ..
 ```
-If the compiler is Visual Studio, the selection of the configuration happens during the second step, like so
+If the compiler is Visual Studio, the selection of the configuration happens during the second step, e.g., 
 ```
 cmake --build . --config Release
 ```
@@ -96,7 +100,7 @@ cmake --build . --config Release
     - prime factor 2 is trivial
     - prime factors 3, 5, 7, 11, 13, 17, 19, 23, 29, 31 use Rader's algorithm followed by a cyclic convolution based on Winograd's method
     - composite factors 6, 10, 12, 14, 15, 18, 20, 21, 22, 24, 26, 28, 30 use the decomposition due to Good and Thomas
-    - prime powers 4, 9, 25, and 27 use radix-$n$ Cooley-Tukey decompositions
+    - prime powers 4, 9, 25, and 27 use radix-n Cooley-Tukey decompositions
     - the remaining powers-of-two 8, 16, 32 use the split-radix method.
 - Larger prime factors are handled by a general implementation of Rader's algorithm followed by an FFT-based cyclic convolution.
 - Twiddle-factors are pre-computed and are stored in a memory efficient way.
@@ -106,7 +110,7 @@ cmake --build . --config Release
 ## Version 0.9
 First release to public.
 
-# Next steps
+# Ideas for upcoming releases
 
 ## Features
 
@@ -114,6 +118,7 @@ First release to public.
 - Add interface for real-valued time-domain data
 - Add more constants to the `FourierParameters` structure for tools such as MATLAB, numpy, and others. 
 - Support true in-place in-order transformations
+- Backends for FFTW and MKL
 
 ## Performance
 
@@ -129,6 +134,6 @@ First release to public.
 The license and additional information can be found below.
 - The license text in the file “LICENSE_1_0.txt” located in the root directory of this project.
 - The license text on the boost website: <https://www.boost.org/LICENSE_1_0.txt>.
-- Bbackground information on the boost website: <https://www.boost.org/users/license.html>.
+- Background information about the license on the boost website: <https://www.boost.org/users/license.html>.
 
 “offt” is not affiliated to the Boost project.
