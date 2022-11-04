@@ -107,7 +107,7 @@ cmake --build . --config Release
 
 # Release history
 
-## Version 0.9
+## Version 0.1.0
 First release to public.
 
 # Ideas for upcoming releases
