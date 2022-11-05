@@ -4,7 +4,7 @@
 
 Features include
 - Simplicity of use
-- Fast execution times for arbitrary transform lengths
+- Fast execution times for arbitrary transform lengths 
 - Forward and inverse transforms
 - Single- and multi-dimensional transforms
 - Float and double data types
@@ -30,7 +30,7 @@ A typical use model for a one-dimensional transform looks like this
 ```
 The `1`s in the argument list to the `Transform()` method signify the stride of the data. In our example the stride is 1, because we assume that the samples occupy adjacent memory locations.
 
-**Note that, currently, transform cannot be performed in-place.** That means, the source and the destination arrays of the transform must not overlap in memory.
+**Note that, currently, transform cannot be performed in-place.** That means, the source and the destination must be distinct arrays.
 
 Above code will compute the forward FFT according to the following convention
 
@@ -45,6 +45,29 @@ x_i = \frac{1}{N} \sum_{k=0}^{N-1} X_k \ e^{-2\pi\mathrm{j}\ ik/N}
 $$
 
 Complete code examples, also for multi-dimensional transforms can be found in the `examples` sub-directory.
+
+# Performance
+
+“offt” is not fastest but fast. Below is a runtime comparison against FFTW3 (<http://www.fftw.org>) and against Wolfram Mathematica 13.0 (<https://www.wolfram.com/mathematica>, I assume it uses the Intel MKL) on my ancient i5-2450M with 2.5 GHz. Times are in seconds, smaller numbers are better.
+
+| length     | “offt”    | FFTW3 <br> w/o SSE2 | FFTW3 <br> with SSE2 | Mathematica <br> on one core | Mathematica <br> on two cores |
+|------------|-----------|---------------------|----------------------|------------------------------|-------------------------------|
+| 4194304    | 0.37 s    |  0.36 s             |  0.31 s              | 0.33 s                       | 0.25 s                        |
+| 8388608    | 0.80 s    |  0.80 s             |  0.69 s              | 0.67 s                       | 0.55 s                        |
+| 8388609    | 3.26 s    |  2.36 s             |  2.97 s              | 2.66 s                       | 2.63 s                        |
+| 8388613    | 3.38 s    |  1.97 s             |  1.57 s              | 1.41 s                       | 0.96 s                        |
+| 16777216   | 2.40 s    |  1.79 s             |  1.59 s              | 1.38 s                       | 1.03 s                        |
+| 33554432   | 5.22 s    |  3.65 s             |  3.51 s              | 2.94 s                       | 2.39 s                        |
+| 33554433   | 6.28 s    |  6.80 s             |  6.04 s              | 7.37 s                       | 5.08 s                        |
+| 33554435   | 9.23 s    | 13.22 s             | 11.99 s              | 9.24 s                       | 8.45 s                        |
+
+
+# Known limitations of the current version
+
+- Library is still in its beginnings, API may change from one (minor) version to another
+- No in-place transforms. Source and destination buffers must be different
+- No special API for real-valued transforms
+- Large transform sizes with prime factors that do not fit into 32 bits will fail (also on 64 bit targets)
 
 # The directory structure
 
@@ -116,17 +139,18 @@ First release to public.
 
 ## Features
 
-- Add interface for non-interleaved real and imaginary parts
-- Add interface for real-valued time-domain data
+- Add API for non-interleaved real and imaginary parts
+- Add API for real-valued time-domain data
 - Add more constants to the `FourierParameters` structure for tools such as MATLAB, numpy, and others. 
 - Support true in-place in-order transformations
-- Backends for FFTW and MKL
 
 ## Performance
 
 - Avoid the recursive application of Rader's algorithm because it is slow. E.g., a length-167 Rader-module does a cyclic convolution of length 166, which, in turn, needs a length-83 Rader-module, which does a cyclic convolution of length 82, which in turn needs a length-41 Rader-module.
 - Improve the re-use of phasors
 - Add SSE2 support
+- Add multi-threading
+- Look into cache issue (in above table, there is a performance hit compared to FFTW starting at 16777216)
 - Optimisation of the hard-coded modules. The larger ones are slower than expected.
 
 # License
@@ -135,7 +159,7 @@ First release to public.
 
 The license and additional information can be found below.
 - The license text in the file “LICENSE_1_0.txt” located in the root directory of this project.
-- The license text on the boost website: <https://www.boost.org/LICENSE_1_0.txt>.
-- Background information about the license on the boost website: <https://www.boost.org/users/license.html>.
+- The license text on the Boost website: <https://www.boost.org/LICENSE_1_0.txt>.
+- Background information about the license on the Boost website: <https://www.boost.org/users/license.html>.
 
 “offt” is not affiliated to the Boost project.
