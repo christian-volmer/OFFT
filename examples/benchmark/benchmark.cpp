@@ -28,7 +28,6 @@ class MultidimensionalTransformTest {
 
 private:
 
-
 	offt::backend::FourierBase<value_t> mFourierBase;
 
 	size_t mDepth;
@@ -68,6 +67,9 @@ public:
 		mTargetBin(),
 		mTargetValue()
 	{
+		// Compute the total element count and the strides of the 
+		// multidimensional array.
+
 		mElementCount = 1;
 		for (ptrdiff_t i = depth - 1; i >= 0; --i) {
 
@@ -78,6 +80,11 @@ public:
 		mData.resize(mElementCount, 1.0);
 		mFreq.resize(mElementCount);
 		mData2.resize(mElementCount);
+
+		// Create the n-dimensional time-domain samples. This
+		// consists of appropriately multiplied complex exponentials
+		// so that the frequency-domain data has a non-zero component
+		// only at the position specified by parameter 'pBins'.
 
 		for (size_t level = 0; level < mDepth; ++level) {
 
@@ -97,19 +104,29 @@ public:
 			}
 		}
 
+		// Compute the offset of target bin in the flattened
+		// array.
+
 		mTargetBin = 0;
 		for (size_t i = 0; i < mDepth; ++i)
 			mTargetBin += offt::math::Mod(mBins[i], mDimensions[i]) * mStrides[i];
 
+		// Compute the expected phase of the target bin.
 		value_t totalPhase = mPhases[0];
 		for (size_t i = 1; i < mDepth; ++i)
 			totalPhase += mPhases[i];
 
+		// Compute the expected value of the target bin. Note this depends on
+		// the value of the parameter 'fourierParameters' passed to the 
+		// constructor of 'mFourierBase' in the initialiser list above.
 		mTargetValue = std::sqrt(value_t(mElementCount)) * std::exp(-totalPhase);
 	}
 
 	BenchmarkSummary Benchmark(double testTime)
 	{
+		// Run a forward and an inverse transform in a loop for 
+		// at least the amount of time specified by 'testTime'.
+		// Count the number of iterations.
 		auto startTime = std::chrono::steady_clock::now();
 
 		size_t iterationCount = 0;
@@ -125,42 +142,68 @@ public:
 
 		} while (duration < testTime);
 
-		double frequencyMse2 = 0;
+		// Ideally, the frequency domain data is expected to be zero except 
+		// for the position of the target bin, where it should have the
+		// value 'mTargetValue'. Calculate the root-mean-square (rms) error
+		// from the ideal solution.
+
+		double frequencyTotalSquaredError = 0;
 		for (size_t i = 0; i < mElementCount; ++i) {
 
 			cpx_t error = i == (size_t)mTargetBin ? mFreq[i] - mTargetValue : mFreq[i];
-			frequencyMse2 += std::pow(std::abs(error), 2);
+			frequencyTotalSquaredError += std::pow(std::abs(error), 2);
 		}
 
-		frequencyMse2 = std::sqrt(frequencyMse2 / mElementCount);
+		double frequencyRmsError = std::sqrt(frequencyTotalSquaredError / mElementCount);
 
-		double roundTripMse2 = 0;
+		// Ideally, the result of the inverse transform should be identical to
+		// the original time-domain values. Calculate the root-mean-square (rms)
+		// error from the ideal solution.
+
+		double roundTripTotalSquaredError = 0;
 		for (size_t i = 0; i < mElementCount; ++i)
-			roundTripMse2 += std::pow(std::abs(mData2[i] - mData[i]), 2);
+			roundTripTotalSquaredError += std::pow(std::abs(mData2[i] - mData[i]), 2);
 
-		roundTripMse2 = std::sqrt(roundTripMse2 / mElementCount);
+		double roundTripRmsError = std::sqrt(roundTripTotalSquaredError / mElementCount);
 
-		return { iterationCount, duration, frequencyMse2, roundTripMse2 };
+		return { iterationCount, duration, frequencyRmsError, roundTripRmsError };
 	}
 };
 
 
 int main()
 {
-	size_t constexpr MaximumDepth = 1;
+	// The maximum depth of the transform to test
+	size_t constexpr MaximumDepth = 4; 
+
+	// The maximum number of elements in the transform
 	size_t constexpr MaximumElementCount = 10000000;
+
+	// Minimum time per test (to get more stable readings)
+	double constexpr MinimumTestTime = 1.0;
 
 	std::random_device rd;
 	std::mt19937_64 gen(rd());
 
+	std::cout << std::setw(16) << "IterationCount";
+	std::cout << ", " << std::setw(16) << "TotalRuntime";
+	std::cout << ", " << std::setw(16) << "FreqDomainError";
+	std::cout << ", " << std::setw(16) << "RoundTripError";
+	std::cout << ", " << "Dimensions";
+	std::cout << "\n";
+
 	do {
 
+		// Get a random depth. 
+
 		size_t depth = std::uniform_int_distribution<size_t>(1, MaximumDepth)(gen);
-		depth = std::uniform_int_distribution<size_t>(1, depth)(gen);
+		depth = std::uniform_int_distribution<size_t>(1, depth)(gen); // called twice to give preference to smaller depths.
 
 		std::vector<size_t> dimensions(depth);
 		std::vector<ptrdiff_t> bins(depth);
 		std::vector<value_t> phases(depth);
+
+		// Compute random and reasonable dimensions for the transform.
 
 		size_t elementCount = 0;
 
@@ -183,21 +226,23 @@ int main()
 
 		} while (elementCount > MaximumElementCount);
 
+		// Random bin and phases
 		for (size_t i = 0; i < depth; ++i) {
 
 			bins[i] = std::uniform_int_distribution<size_t>(0, dimensions[i] - 1)(gen);
 			phases[i] = std::uniform_real_distribution<value_t>(-Pi, Pi)(gen);
 		}
 
-
+		// Run the benchmark
 		MultidimensionalTransformTest test(dimensions.data(), depth, bins.data(), phases.data());
 
-		auto summary = test.Benchmark(1.0);
+		auto summary = test.Benchmark(MinimumTestTime);
 
-		std::cout << summary.IterationCount;
-		std::cout << ", " << summary.TotalRuntime;
-		std::cout << ", " << summary.FrequencyDomainError;
-		std::cout << ", " << summary.RoundTripError;
+		// Print the results
+		std::cout << std::setw(16) << summary.IterationCount;
+		std::cout << ", " << std::setw(16) << summary.TotalRuntime;
+		std::cout << ", " << std::setw(16) << summary.FrequencyDomainError;
+		std::cout << ", " << std::setw(16) << summary.RoundTripError;
 
 		for (size_t dimension : dimensions)
 			std::cout << ", " << dimension;
