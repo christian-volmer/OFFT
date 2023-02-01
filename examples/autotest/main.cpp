@@ -32,5 +32,5 @@ struct Pi {
 int main()
 {
 	std::cout << Pi<float>::value << "\n";
-	return 0;
+	return 1;
 }
