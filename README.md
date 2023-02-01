@@ -5,7 +5,7 @@ Note: the badges above should both indicate failure.
 
 # Introduction
 
-“oFFT” is a fast, general purpose Fast Fourier Transform (FFT) open-source library for C++ 11.
+“oFFT” is a fast, general purpose Fast Fourier Transform (FFT) open-source library for C++.
 
 Features include
 - Simplicity of use
@@ -34,8 +34,6 @@ A typical use model for a one-dimensional transform looks like this
     fourier.Transform(pointerToFrequencyDomainResult, 1, pointerToTimeDomainSamples, 1);
 ```
 The `1`s in the argument list to the `Transform()` method signify the stride of the data. In our example the stride is 1, because we assume that the samples occupy adjacent memory locations.
-
-**Note that, currently, transform cannot be performed in-place.** That means, the source and the destination must be distinct arrays.
 
 Above code will compute the forward FFT according to the following convention
 
@@ -69,10 +67,11 @@ Complete code examples, also for multi-dimensional transforms can be found in th
 
 # Known limitations of the current version
 
-- Library is still in its beginnings, API may change from one (minor) version to another
-- No in-place transforms. Source and destination buffers must be different
-- No special API for real-valued transforms
-- Large transform sizes with prime factors that do not fit into 32 bits will fail (also on 64 bit targets)
+- Library is still in its beginnings, API may change from one (minor) version to another.
+- Public API for non-interleaved real and imaginary parts is missing.
+- No in-place transforms. Source and destination buffers must be different.
+- No special API for real-valued transforms.
+- Extremely large transform sizes with prime factors that do not fit into 32 bits will fail (also on 64 bit targets).
 
 # The directory structure
 
@@ -81,6 +80,7 @@ This project repository is structured as follows
 ```
 root
   + examples
+  |   + autotest ......... library self-test
   |   + benchmark ........ benchmark that runs transforms of random depth and dimensions
   |   + demo ............. simple demo for a one-dimensional transform  
   + libs
@@ -97,7 +97,7 @@ I am using “Visual Studio Express 2017 for Windows Desktop” for development.
 
 CMake is a cross-platform build environment. See <https://cmake.org> for more information.
 
-I do not use CMake myself, but below information should work to get you started. I tested this on Windows with both the Microsoft compiler and the Windows-port of the GNU compiler, MinGW-64, from the MSYS2 distribution, see <https://www.msys2.org>.
+I am not a regular user of CMake myself (yet), but below information should get you started. I tested this on Windows with both the Microsoft compiler and the Windows-port of the GNU compiler, MinGW-64, from the MSYS2 distribution, see <https://www.msys2.org>.
 
 I am assuming that you already created an (empty) directory called `build` below the root of this repository. Both CMake and the compiler must be on the system path. From within `build`, run
 ```
