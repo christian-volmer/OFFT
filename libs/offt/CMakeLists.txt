@@ -50,3 +50,7 @@ add_library(offt
     backend/standard_modules/module_31.cpp
     backend/standard_modules/module_32.cpp
 )
+
+set_property(TARGET offt PROPERTY CXX_STANDARD 11)
+set_property(TARGET offt PROPERTY CXX_STANDARD_REQUIRED ON)
+set_property(TARGET offt PROPERTY CXX_EXTENSIONS OFF)
