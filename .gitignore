@@ -2,5 +2,9 @@
 .vscode/
 *.user
 
+Debug
+Release
+x64
+
 /build/
 /private/
