@@ -5,5 +5,3 @@ add_executable(autotest
 )
 
 target_link_libraries(autotest PRIVATE offt)
-
-add_test(autotest autotest)

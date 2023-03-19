@@ -6,13 +6,13 @@ if(MSVC)
   add_compile_options(/W4)
 else()
   add_compile_options(-Wall -Wextra -Wpedantic)
+
+  # Enforce C++11 to ensure we are not using features from later standards
+  add_compile_options(-std=c++11)
 endif()
-
-set_property(GLOBAL PROPERTY CMAKE_CXX_STANDARD 11)
-set_property(GLOBAL PROPERTY CMAKE_CXX_STANDARD_REQUIRED ON)
-set_property(GLOBAL PROPERTY CMAKE_CXX_EXTENSIONS OFF)
-
-enable_testing()
 
 add_subdirectory(offt)
 add_subdirectory(examples)
+
+enable_testing()
+add_test(NAME autotest COMMAND autotest)
