@@ -4,8 +4,8 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include "prime_q.h"
-#include "miller_rabin_probable_prime_q.h"
+#include <offt/math/prime_q.h>
+#include <offt/math/miller_rabin_probable_prime_q.h>
 
 namespace offt {
 namespace math {

@@ -4,10 +4,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include "primitive_root.h"
-#include "prime_q.h"
-#include "factor_integer.h"
-#include "power_mod.h"
+#include <offt/math/primitive_root.h>
+#include <offt/math/prime_q.h>
+#include <offt/math/factor_integer.h>
+#include <offt/math/power_mod.h>
 
 #include <set>
 #include <stdexcept>

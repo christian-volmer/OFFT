@@ -4,10 +4,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include "miller_rabin_probable_prime_q.h"
-#include "even_q.h"
-#include "odd_q.h"
-#include "power_mod.h"
+#include <offt/math/miller_rabin_probable_prime_q.h>
+#include <offt/math/even_q.h>
+#include <offt/math/odd_q.h>
+#include <offt/math/power_mod.h>
 
 #include <stdexcept>
 

@@ -5,10 +5,10 @@
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 #include "rader_module.h"
-#include "../math/primitive_root.h"
-#include "../math/power_mod.h"
-#include "../math/times_plus_mod.h"
-#include "../math/prime_q.h"
+#include <offt/math/primitive_root.h>
+#include <offt/math/power_mod.h>
+#include <offt/math/times_plus_mod.h>
+#include <offt/math/prime_q.h>
 
 namespace offt {
 namespace backend {

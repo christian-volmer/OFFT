@@ -13,9 +13,8 @@
 #include <chrono>
 #include <random>
 
-#include <offt/fourier.h>
-#include <offt/math/mod.h>
-#include <offt/math/list_product.h>
+#include <offt.h>
+#include <offt/math.h>
 
 using std::size_t;
 using std::ptrdiff_t;
