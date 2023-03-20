@@ -15,4 +15,4 @@ add_subdirectory(offt)
 add_subdirectory(examples)
 
 enable_testing()
-add_test(NAME autotest COMMAND autotest)
+add_test(NAME self-test COMMAND benchmark --self-test)
