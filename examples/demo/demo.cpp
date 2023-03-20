@@ -9,7 +9,7 @@
 #include <complex>
 #include <iomanip>
 
-#include <offt/fourier.h>
+#include <offt.h>
 
 int main()
 {

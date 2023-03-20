@@ -4,7 +4,7 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include "extended_gcd.h"
+#include <offt/math/extended_gcd.h>
 
 #include <limits>
 #include <stdexcept>

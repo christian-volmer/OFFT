@@ -4,10 +4,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include "power_mod.h"
-#include "extended_gcd.h"
-#include "mod.h"
-#include "odd_q.h"
+#include <offt/math/power_mod.h>
+#include <offt/math/extended_gcd.h>
+#include <offt/math/mod.h>
+#include <offt/math/odd_q.h>
 
 #include <limits>
 #include <stdexcept>

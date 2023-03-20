@@ -4,10 +4,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include "factor_integer.h"
-#include "times_plus_mod.h"
-#include "prime_q.h"
-#include "gcd.h"
+#include <offt/math/factor_integer.h>
+#include <offt/math/times_plus_mod.h>
+#include <offt/math/prime_q.h>
+#include <offt/math/gcd.h>
 
 #include <cmath>
 

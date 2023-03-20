@@ -5,4 +5,3 @@ add_executable(demo
 )
 
 target_link_libraries(demo PRIVATE offt)
-target_include_directories(demo PRIVATE ../../libs)

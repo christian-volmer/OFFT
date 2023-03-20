@@ -6,7 +6,7 @@
 
 /*
 
-'fourier.h' is the main header file for the OpenFFT library.
+'offt.h' is the main header file for the OFFT library.
 It provides the 'Fourier' class in the 'offt' namespace, which
 is the primary interface for performing one- and multi-
 dimensional Fast Fourier Transforms and the corresponding 
@@ -16,7 +16,7 @@ inverses.
 
 #pragma once
 
-#include "backend/fourier_base.h"
+#include "offt/backend/fourier_base.h"
 
 namespace offt {
 

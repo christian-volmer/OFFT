@@ -1,0 +1,24 @@
+# https://clang.llvm.org/docs/ClangFormatStyleOptions.html
+Standard: Latest
+BasedOnStyle: WebKit 
+UseTab: Always
+TabWidth: 4
+IndentWidth: 4
+NamespaceIndentation: None
+SpaceAfterTemplateKeyword: false
+RequiresExpressionIndentation: OuterScope
+BreakBeforeConceptDeclarations: Always
+SpaceBeforeRangeBasedForLoopColon: true
+KeepEmptyLinesAtTheStartOfBlocks: true
+AlignAfterOpenBracket: DontAlign
+AllowShortBlocksOnASingleLine: Never
+AlwaysBreakTemplateDeclarations: Yes
+Cpp11BracedListStyle: false
+IndentRequiresClause: false
+EmptyLineAfterAccessModifier: Always
+BreakConstructorInitializers: AfterColon
+PointerAlignment: Right
+BreakBeforeBraces: Custom
+BraceWrapping:
+  BeforeElse: true
+  AfterFunction: true

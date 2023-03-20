@@ -1,6 +1,11 @@
+[![Windows Test](https://github.com/christian-volmer/offt/actions/workflows/windows-test.yml/badge.svg)](https://github.com/christian-volmer/offt/actions/workflows/windows-test.yml)
+[![Linux Test](https://github.com/christian-volmer/offt/actions/workflows/linux-test.yml/badge.svg)](https://github.com/christian-volmer/offt/actions/workflows/linux-test.yml)
+
+Note: the badges above should both indicate failure.
+
 # Introduction
 
-“offt” is a fast, general purpose Fast Fourier Transform (FFT) open-source library for C++ 11.
+“oFFT” is a fast, general purpose Fast Fourier Transform (FFT) open-source library for C++.
 
 Features include
 - Simplicity of use
@@ -14,7 +19,7 @@ Features include
 
 # Basic use
 
-In order to do the actual transform fast, “offt” needs to perform some precomputations that depend on the length of the transform. For this reason, we first have to construct an object of the class `Fourier` and pass the length (or the dimensions, for the case of a multi-dimensional transform) as an argument to the constructor. We then call the `Transform()` and `InverseTransform()` methods to do the actual transform. 
+In order to do the actual transform fast, “oFFT” needs to perform some precomputations that depend on the length of the transform. For this reason, we first have to construct an object of the class `Fourier` and pass the length (or the dimensions, for the case of a multi-dimensional transform) as an argument to the constructor. We then call the `Transform()` and `InverseTransform()` methods to do the actual transform. 
 
 A typical use model for a one-dimensional transform looks like this
 ```
@@ -29,8 +34,6 @@ A typical use model for a one-dimensional transform looks like this
     fourier.Transform(pointerToFrequencyDomainResult, 1, pointerToTimeDomainSamples, 1);
 ```
 The `1`s in the argument list to the `Transform()` method signify the stride of the data. In our example the stride is 1, because we assume that the samples occupy adjacent memory locations.
-
-**Note that, currently, transform cannot be performed in-place.** That means, the source and the destination must be distinct arrays.
 
 Above code will compute the forward FFT according to the following convention
 
@@ -48,9 +51,9 @@ Complete code examples, also for multi-dimensional transforms can be found in th
 
 # Performance
 
-“offt” is not fastest but fast. Below is a runtime comparison against FFTW3 (<http://www.fftw.org>) and against Wolfram Mathematica 13.0 (<https://www.wolfram.com/mathematica>, I assume it uses the Intel MKL) on my ancient i5-2450M with 2.5 GHz. Times are in seconds, smaller numbers are better.
+“oFFT” can keep up with the best libraries available. Below is a runtime comparison against FFTW3 (<http://www.fftw.org>) and against Wolfram Mathematica 13.0 (<https://www.wolfram.com/mathematica>, I assume it uses the Intel MKL) on my old i5-2450M with 2.5 GHz. Times are in seconds, smaller numbers are better.
 
-| length     | “offt”    | FFTW3 <br> w/o SSE2 | FFTW3 <br> with SSE2 | Mathematica <br> on one core | Mathematica <br> on two cores |
+| length     | “oFFT”    | FFTW3 <br> w/o SSE2 | FFTW3 <br> with SSE2 | Mathematica <br> on one core | Mathematica <br> on two cores |
 |------------|-----------|---------------------|----------------------|------------------------------|-------------------------------|
 | 4194304    | 0.37 s    |  0.36 s             |  0.31 s              | 0.33 s                       | 0.25 s                        |
 | 8388608    | 0.80 s    |  0.80 s             |  0.69 s              | 0.67 s                       | 0.55 s                        |
@@ -64,10 +67,11 @@ Complete code examples, also for multi-dimensional transforms can be found in th
 
 # Known limitations of the current version
 
-- Library is still in its beginnings, API may change from one (minor) version to another
-- No in-place transforms. Source and destination buffers must be different
-- No special API for real-valued transforms
-- Large transform sizes with prime factors that do not fit into 32 bits will fail (also on 64 bit targets)
+- Library is still in its beginnings, API may change from one (minor) version to another.
+- Public API for non-interleaved real and imaginary parts is missing.
+- No in-place transforms. Source and destination buffers must be different.
+- No special API for real-valued transforms.
+- Extremely large transform sizes with prime factors that do not fit into 32 bits will fail (also on 64 bit targets).
 
 # The directory structure
 
@@ -76,10 +80,11 @@ This project repository is structured as follows
 ```
 root
   + examples
+  |   + autotest ......... library self-test
   |   + benchmark ........ benchmark that runs transforms of random depth and dimensions
   |   + demo ............. simple demo for a one-dimensional transform  
   + libs
-      + offt ............. the “offt” library
+      + offt ............. the “oFFT” library
 ```
 
 # Build and run
@@ -92,7 +97,7 @@ I am using “Visual Studio Express 2017 for Windows Desktop” for development.
 
 CMake is a cross-platform build environment. See <https://cmake.org> for more information.
 
-I do not use CMake myself, but below information should work to get you started. I tested this on Windows with both the Microsoft compiler and the Windows-port of the GNU compiler, MinGW-64, from the MSYS2 distribution, see <https://www.msys2.org>.
+I am not a regular user of CMake myself (yet), but below information should get you started. I tested this on Windows with both the Microsoft compiler and the Windows-port of the GNU compiler, MinGW-64, from the MSYS2 distribution, see <https://www.msys2.org>.
 
 I am assuming that you already created an (empty) directory called `build` below the root of this repository. Both CMake and the compiler must be on the system path. From within `build`, run
 ```
@@ -117,9 +122,9 @@ cmake --build . --config Release
 
 # Technical details
 
-“offt” implements the so-called mixed-radix Cooley-Tukey FFT algorithm. The basic idea is to decompose the length of the transform into smaller factors. For each factor, a fast FFT algorithm is called. The result of the complete transform is then computed by appropriately putting together the results from the smaller transforms. This approach is also known as “divide and conquer”. When done right, it will give a major speed improvement over the naive implementation of the Discrete Fourier Transform (DFT) formula.
+“oFFT” implements the so-called mixed-radix Cooley-Tukey FFT algorithm. The basic idea is to decompose the length of the transform into smaller factors. For each factor, a fast FFT algorithm is called. The result of the complete transform is then computed by appropriately putting together the results from the smaller transforms. This approach is also known as “divide and conquer”. When done right, it will give a major speed improvement over the naive implementation of the Discrete Fourier Transform (DFT) formula.
 
-“offt” employs the following methods and algorithms
+“oFFT” employs the following methods and algorithms
 - At the top there is a general implementation of an in-order out-of-place decimation-in-time mixed-radix Cooley-Tukey algorithm. 
 - There are hard-coded FFT modules in the form of automatically generated “spaghetti code” for factors up to length 32
     - prime factor 2 is trivial
@@ -151,15 +156,15 @@ First release to public.
 - Add SSE2 support
 - Add multi-threading
 - Look into cache issue (in above table, there is a performance hit compared to FFTW starting at 16777216)
-- Optimisation of the hard-coded modules. The larger ones are slower than expected.
+- Optimisation of the hard-coded modules, especially the larger ones.
 
 # License
 
-“offt” is released under the “Boost Software License”. This is a liberal license that encourages the use of this library in commercial and closed-source software.
+“oFFT” is released under the “Boost Software License”. This is a liberal license that encourages the use of this library in commercial and closed-source software.
 
 The license and additional information can be found below.
 - The license text in the file “LICENSE_1_0.txt” located in the root directory of this project.
 - The license text on the Boost website: <https://www.boost.org/LICENSE_1_0.txt>.
 - Background information about the license on the Boost website: <https://www.boost.org/users/license.html>.
 
-“offt” is not affiliated to the Boost project.
+“oFFT” is not affiliated to the Boost project.

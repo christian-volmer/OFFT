@@ -8,7 +8,7 @@
 
 #include "rader_module.h"
 #include "standard_module.h"
-#include "../math/factor_integer.h"
+#include <offt/math/factor_integer.h>
 
 #include <cassert>
 #include <algorithm>
