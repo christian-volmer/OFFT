@@ -2,5 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="benchmark.cpp" />
+    <ClCompile Include="randomised_testing.cpp" />
+    <ClCompile Include="self_test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="randomised_testing.h" />
+    <ClInclude Include="self_test.h" />
+    <ClInclude Include="transform_test.h" />
   </ItemGroup>
 </Project>

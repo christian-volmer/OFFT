@@ -25,6 +25,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="benchmark.cpp" />
+    <ClCompile Include="randomised_testing.cpp" />
+    <ClCompile Include="self_test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="randomised_testing.h" />
+    <ClInclude Include="self_test.h" />
+    <ClInclude Include="transform_test.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

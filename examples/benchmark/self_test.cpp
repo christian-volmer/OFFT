@@ -7,6 +7,7 @@
 #include "self_test.h"
 #include "transform_test.h"
 
+#include <algorithm>
 #include <iostream>
 
 template<typename value_t>
