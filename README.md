@@ -52,7 +52,6 @@ $$
 
 Complete code examples, also for multi-dimensional transforms can be found in the `examples` sub-directory.
 
-
 ## Performance
 
 OFFT can keep up with the best libraries available. Below is a runtime comparison against FFTW3 (<http://www.fftw.org>) and against Wolfram Mathematica 13.0 (<https://www.wolfram.com/mathematica>, I assume it uses the Intel MKL) on my old i5-2450M with 2.5 GHz. Times are in seconds, smaller numbers are better.
@@ -82,7 +81,9 @@ root
                            Can be run as a self-test with command-line parameter --self-test
 ```
 
-## Build and run
+## Download, build, and run
+
+The recommended way is to download the [latest release package published on GitHub](https://github.com/christian-volmer/OFFT/releases). Then follow the build instructions below for Visual Studio or CMake.
 
 ### Using Microsoft Visual Studio
 
@@ -129,6 +130,14 @@ OFFT employs the following methods and algorithms
 - Twiddle-factors are pre-computed and are stored in a memory efficient way.
 
 ## Release history
+
+### *Changes pending for the next release*
+ - Moved public header files to dedicated directory
+ - Cleaned up the structure of the `CMakeLists.txt` files. 
+    - Public include directory is now a property of the OFFT library itself. 
+    - Increased the compiler warning level.
+    - Enforcing C++ 11 on the GNU compiler to ensure we are not using any later C++ features.
+ - The `benchmark` example does a quick self-test of the one-dimensional FFT implementation when given the command line option `--self-test`. Used as part of the CI workflow on GitHub.
 
 ### Version 0.1.0
  - First release to public.
