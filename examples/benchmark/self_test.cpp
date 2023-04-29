@@ -71,5 +71,7 @@ int SelfTest()
 	std::cout << "--- Testing type double ---\n";
 	failure = SelfTestForType<double>() || failure;
 
+	failure = true;
+
 	return failure;
 }
