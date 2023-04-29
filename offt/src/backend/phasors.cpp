@@ -17,7 +17,7 @@ using std::ptrdiff_t;
 template class Phasors<float>;
 template class Phasors<double>;
 
-static size_t constexpr SPLIT_LENGTH = 2048;
+static size_t const SPLIT_LENGTH = 2048;
 
 template<typename valueT>
 Phasors<valueT>::Phasors(size_t length) :
@@ -25,7 +25,7 @@ Phasors<valueT>::Phasors(size_t length) :
 	mLargePhasors(),
 	mSmallPhasors()
 {
-	static realT constexpr TWO_PI = realT(6.28318530717958647692528676656);
+	static realT const TWO_PI = realT(6.28318530717958647692528676656);
 
 	size_t smallLength = std::min(SPLIT_LENGTH, mLength);
 	mSmallPhasors.resize(smallLength);

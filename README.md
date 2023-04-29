@@ -13,7 +13,7 @@ Out of personal interest in the various algorithms involved, I wrote a Fast Four
 - Single- and multi-dimensional transforms
 - Float and double data types
 - Arbitrary strides for easy application to multi-channel data (such as stereo audio or RGB images)
-- Support for various DFT conventions that differ in terms of the scaling and the sign of the imaginary part. 
+- Support for various DFT conventions that differ in terms of the scaling and the sign of the imaginary part
 - Written in platform-independent C++ 11
 
 ## ... open, and free!
@@ -26,15 +26,15 @@ In order to do the actual transform fast, OFFT needs to perform some precomputat
 
 A typical use model for a one-dimensional transform looks like this
 ```c++
-    #include <offt.h>
-    ...
-    std::size_t length = 1000; // Number of complex samples in both time- and frequency-domain
-    offt::Fourier<> fourier(length); // This does all the necessary pre-computations
-    ...
-    std::complex<double> const *pointerToTimeDomainSamples = ...
-    std::complex<double> *pointerToFrequencyDomainResult = ...
+#include <offt.h>
+...
+std::size_t length = 1000; // Number of complex samples in both time- and frequency-domain
+offt::Fourier<> fourier(length); // This does all the necessary pre-computations
+...
+std::complex<double> const *pointerToTimeDomainSamples = ...
+std::complex<double> *pointerToFrequencyDomainResult = ...
 
-    fourier.Transform(pointerToFrequencyDomainResult, 1, pointerToTimeDomainSamples, 1);
+fourier.Transform(pointerToFrequencyDomainResult, 1, pointerToTimeDomainSamples, 1);
 ```
 The `1`s in the argument list to the `Transform()` method signify the stride of the data. In our example the stride is 1, because we assume that the samples occupy adjacent memory locations.
 

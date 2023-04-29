@@ -16,6 +16,7 @@ inverses.
 
 #pragma once
 
+#include "offt/compat.h"
 #include "offt/backend/fourier_base.h"
 
 namespace offt {
@@ -59,7 +60,7 @@ public:
 
 	// Returns the depth (i.e., the number of dimensions) of the transform, which is 
 	// equal to the 'depth' template parameter.
-	std::size_t constexpr GetDepth() const
+	std::size_t OFFT_OPTIONAL_CONSTEXPR GetDepth() const
 	{
 		return depth;
 	}

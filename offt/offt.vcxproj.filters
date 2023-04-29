@@ -76,5 +76,6 @@
     <ClInclude Include="include\offt\fourier_parameters.h" />
     <ClInclude Include="include\offt\math.h" />
     <ClInclude Include="include\offt.h" />
+    <ClInclude Include="include\offt\compat.h" />
   </ItemGroup>
 </Project>

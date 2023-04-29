@@ -7,6 +7,7 @@
 #include <random>
 #include <iomanip>
 #include <iostream>
+#include <algorithm>
 
 #include "transform_test.h"
 
