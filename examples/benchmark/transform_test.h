@@ -20,8 +20,6 @@ private:
 	using value_t = T;
 	using cpx_t = std::complex<value_t>;
 
-	static value_t constexpr Pi = value_t(3.1415926535897932385);
-
 	offt::backend::FourierBase<value_t> mFourierBase;
 
 	size_t mDepth;
@@ -61,6 +59,8 @@ public:
 		mTargetBin(),
 		mTargetValue()
 	{
+		static value_t const Pi = value_t(3.1415926535897932385);
+
 		// Compute the total element count and the strides of the
 		// multidimensional array.
 

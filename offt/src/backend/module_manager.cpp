@@ -33,7 +33,8 @@ void ModuleManager<valueT>::RegisterStandardModule()
 }
 
 template<typename valueT>
-ModuleManager<valueT>::ModuleManager()
+ModuleManager<valueT>::ModuleManager() :
+	mStandardModules()
 {
 	RegisterStandardModule<2>();
 	RegisterStandardModule<3>();

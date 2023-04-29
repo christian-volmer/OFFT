@@ -4,11 +4,13 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
+#include <offt/compat.h>
 #include <offt/backend/fourier_base.h>
 #include <offt/math/list_product.h>
 #include "program.h"
 
 #include <cassert>
+#include <algorithm>
 
 namespace offt {
 namespace backend {
@@ -223,6 +225,7 @@ public:
 		mFourierParameters(fourierParameters),
 		mStorage(new backend::Storage<valueT>()),
 		mPrograms(new backend::Program<valueT>[depth]),
+		mLargestDimensionLevel(0),
 		mTempRequirement(0),
 		mTemp(nullptr),
 		mElementCount(0),

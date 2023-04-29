@@ -11,6 +11,7 @@
 
 #include <limits>
 #include <stdexcept>
+#include <cstdint>
 
 namespace offt {
 namespace math {
