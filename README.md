@@ -89,6 +89,8 @@ The recommended way is to download the [latest release package published on GitH
 
 If you are a Visual Studio user, just open the provided Solution file `offt.sln` from the root directory and you are set. 
 
+**NOTE:** the supplied Solution file was created in Visual Studio 2017 and uses the v141 Platform Toolset. If you wish to compile in Visual Studio 2013, you will have to change the Platform Toolset to v120 by right-clicking on each project and changing the tool-set accordingly. Make sure to do this for all configurations (Release, Debug) and all platforms (x86, x64).
+
 ### Using CMake
 
 CMake is a cross-platform build environment. Visit <https://cmake.org> for more information. 
@@ -132,6 +134,8 @@ OFFT employs the following methods and algorithms
 ## Release history
 
 ### *Changes pending for the next release*
+ - Added support for Visual Studio 2013
+ - BUGFIX: potential crash due to an uninitialised member variable
  - Moved public header files to dedicated directory
  - Cleaned up the structure of the `CMakeLists.txt` files. 
     - Public include directory is now a property of the OFFT library itself. 
