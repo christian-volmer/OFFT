@@ -21,12 +21,19 @@ class Program<valueT>::Impl {
 
 public:
 
+	using ItemListType = std::vector<std::unique_ptr<ModuleBase<valueT>>>;
+
 	size_t mLength;
 	size_t mTempRequirement;
 
-	using ItemListType = std::vector<std::unique_ptr<ModuleBase<valueT>>>;
-
 	ItemListType mItems;
+
+	Impl() :
+		mLength(0),
+		mTempRequirement(0),
+		mItems()
+	{
+	}
 
 	static void RecursiveExecuteInPlaceOutOfOrderTime(valueT *pReal, valueT *pImag, ptrdiff_t stride, typename ItemListType::const_iterator const &item)
 	{
