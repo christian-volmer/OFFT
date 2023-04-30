@@ -54,19 +54,7 @@ Complete code examples, also for multi-dimensional transforms can be found in th
 
 ## Performance
 
-OFFT can keep up with the best libraries available. Below is a runtime comparison against FFTW3 (<http://www.fftw.org>) and against Wolfram Mathematica 13.0 (<https://www.wolfram.com/mathematica>, I assume it uses the Intel MKL) on my old i5-2450M with 2.5 GHz. Times are in seconds, smaller numbers are better.
-
-| Length     | OFFT <br> (one core)      | FFTW3 <br> w/o SSE2 | FFTW3 <br> with SSE2 | Mathematica <br> (one core) | Mathematica <br> (two cores) |
-|------------|-----------|---------------------|----------------------|------------------------------|-------------------------------|
-| 4194304    | 0.37 s    |  0.36 s             |  0.31 s              | 0.33 s                       | 0.25 s                        |
-| 8388608    | 0.80 s    |  0.80 s             |  0.69 s              | 0.67 s                       | 0.55 s                        |
-| 8388609    | 3.26 s    |  2.36 s             |  2.97 s              | 2.66 s                       | 2.63 s                        |
-| 8388613    | 3.38 s    |  1.97 s             |  1.57 s              | 1.41 s                       | 0.96 s                        |
-| 16777216   | 2.40 s    |  1.79 s             |  1.59 s              | 1.38 s                       | 1.03 s                        |
-| 33554432   | 5.22 s    |  3.65 s             |  3.51 s              | 2.94 s                       | 2.39 s                        |
-| 33554433   | 6.28 s    |  6.80 s             |  6.04 s              | 7.37 s                       | 5.08 s                        |
-| 33554435   | 9.23 s    | 13.22 s             | 11.99 s              | 9.24 s                       | 8.45 s                        |
-
+The mission of OFFT is to provide a truly open FFT library that delivers competitive performance for arbitrary length transforms and, at the same time, keeps the code size and maintenance effort of the library reasonable. To understand what that means, I am providing an [OFFT speed comparison](doc/OfftSpeedComparison.md) against two popular libraries.
 
 ## The directory structure
 
