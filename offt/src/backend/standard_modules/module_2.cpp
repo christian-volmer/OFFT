@@ -15,15 +15,15 @@ using std::ptrdiff_t;
 template<typename valueT>
 static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement)
 {
-	valueT t1, t2, t3, t4;
+	valueT t0, t1, t2, t3;
 
-	phasors.Multiply(t1, t2, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
-	phasors.Multiply(t3, t4, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
+	phasors.Multiply(t0, t1, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
+	phasors.Multiply(t2, t3, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
 
-	pReal[0 * stride] = t1 + t3;
-	pImag[0 * stride] = t2 + t4;
-	pReal[1 * stride] = t1 - t3;
-	pImag[1 * stride] = t2 - t4;
+	pReal[0 * stride] = t0 + t2;
+	pImag[0 * stride] = t1 + t3;
+	pReal[1 * stride] = t0 - t2;
+	pImag[1 * stride] = t1 - t3;
 }
 
 template<> void StandardModule<float, 2>::Compute(float *pReal, float *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
