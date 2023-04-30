@@ -17,7 +17,6 @@ using std::ptrdiff_t;
 template class Phasors<float>;
 template class Phasors<double>;
 
-static size_t const SPLIT_LENGTH = 2048;
 
 template<typename valueT>
 Phasors<valueT>::Phasors(size_t length) :
@@ -27,20 +26,22 @@ Phasors<valueT>::Phasors(size_t length) :
 {
 	static realT const TWO_PI = realT(6.28318530717958647692528676656);
 
-	size_t smallLength = std::min(SPLIT_LENGTH, mLength);
+	size_t splitLength = GetSplitLength();
+
+	size_t smallLength = std::min(splitLength, mLength);
 	mSmallPhasors.resize(smallLength);
 
 	for (size_t i = 0; i < smallLength; ++i)
 		mSmallPhasors[i] = std::exp(complexT(0, TWO_PI * i / mLength));
 
-	size_t largeLength = (mLength + SPLIT_LENGTH - 1) / SPLIT_LENGTH;
+	size_t largeLength = (mLength + splitLength - 1) / splitLength;
 
 	if (largeLength > 1) {
 
 		mLargePhasors.resize(largeLength);
 
 		for (size_t i = 0; i < largeLength; ++i)
-			mLargePhasors[i] = std::exp(complexT(0, TWO_PI * i * SPLIT_LENGTH / mLength));
+			mLargePhasors[i] = std::exp(complexT(0, TWO_PI * i * splitLength / mLength));
 	}
 }
 
@@ -51,17 +52,12 @@ size_t Phasors<valueT>::GetLength() const
 }
 
 template<typename valueT>
-void Phasors<valueT>::Multiply(realT &destR, realT &destI, realT const &srcR, realT const &srcI, size_t index) const
+void Phasors<valueT>::Twiddle(realT *t, realT const *real, realT const *imag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement, size_t length) const
 {
-	complexT phasor = mSmallPhasors[index % SPLIT_LENGTH];
-	if (!mLargePhasors.empty() && index >= SPLIT_LENGTH)
-		phasor *= mLargePhasors[index / SPLIT_LENGTH];
+	for (std::size_t i = 0; i < length; ++i) {
 
-	realT cos = phasor.real();
-	realT sin = phasor.imag();
-
-	destR = srcR * cos - srcI * sin;
-	destI = srcR * sin + srcI * cos;
+		Multiply(t[2*i], t[2*i+1], real[i * stride], imag[i * stride], twiddleStart + i * twiddleIncrement);
+	}
 }
 
 }

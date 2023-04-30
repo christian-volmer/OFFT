@@ -15,30 +15,30 @@ using std::ptrdiff_t;
 template<typename valueT>
 static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement)
 {
-	valueT t1, t2, t3, t4, t5, t6, t9, t10;
+	valueT t0, t1, t2, t3, t4, t5, t6, t7;
 
-	phasors.Multiply(t1, t2, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
-	phasors.Multiply(t3, t4, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
-	phasors.Multiply(t5, t6, pReal[2 * stride], pImag[2 * stride], twiddleStart + 2 * twiddleIncrement);
+	phasors.Multiply(t0, t1, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
+	phasors.Multiply(t2, t3, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
+	phasors.Multiply(t4, t5, pReal[2 * stride], pImag[2 * stride], twiddleStart + 2 * twiddleIncrement);
 
-	t9 = t3 - t5;
-	t10 = t4 - t6;
-	t3 += t5;
-	t4 += t6;
-	t1 += t3;
+	t6 = t2 - t4;
+	t7 = t3 - t5;
 	t2 += t4;
-	t10 *= valueT(0.86602540378443864676);
-	t9 *= valueT(0.86602540378443864676);
+	t3 += t5;
+	t0 += t2;
+	t1 += t3;
+	t7 *= valueT(0.86602540378443864676);
+	t6 *= valueT(0.86602540378443864676);
+	t2 *= valueT(1.5);
 	t3 *= valueT(1.5);
-	t4 *= valueT(1.5);
+	t2 = t0 - t2;
 	t3 = t1 - t3;
-	t4 = t2 - t4;
-	pReal[0 * stride] = t1;
-	pImag[0 * stride] = t2;
-	pReal[1 * stride] = t3 - t10;
-	pImag[1 * stride] = t4 + t9;
-	pReal[2 * stride] = t3 + t10;
-	pImag[2 * stride] = t4 - t9;
+	pReal[0 * stride] = t0;
+	pImag[0 * stride] = t1;
+	pReal[1 * stride] = t2 - t7;
+	pImag[1 * stride] = t3 + t6;
+	pReal[2 * stride] = t2 + t7;
+	pImag[2 * stride] = t3 - t6;
 }
 
 template<> void StandardModule<float, 3>::Compute(float *pReal, float *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const

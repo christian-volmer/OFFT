@@ -1,6 +1,8 @@
 .vs/
 .vscode/
 *.user
+*.sdf
+*.suo
 
 Debug
 Release

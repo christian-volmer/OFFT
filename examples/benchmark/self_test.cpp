@@ -39,23 +39,23 @@ bool SelfTestForType()
 {
 	bool failure = false;
 
-	std::cout << "  All lengths up to 100...\n";
-    for (int length = 1; length < 100; ++length)
+	std::cout << "  All lengths up to 1000...\n";
+    for (int length = 1; length < 1000; ++length)
 		failure = TestLength<T>(length) || failure;
 
 	std::cout << "  Some prime lengths...\n";
-    for (int length = 1001; length < 1500; length += 2) {
+    for (int length = 10001; length < 10500; length += 2) {
 
 		if (offt::math::PrimeQ(length))
 			failure = TestLength<T>(length) || failure;
 	}
 
 	std::cout << "  Powers of 2...\n";
-    for (int length = 128; length <= 131072; length *= 2)
+    for (int length = 128; length <= 1024*1024; length *= 2)
 		failure = TestLength<T>(length) || failure;
 
 	std::cout << "  Powers of 10...\n";
-    for (int length = 100; length <= 100000; length *= 10)
+    for (int length = 100; length <= 1000000; length *= 10)
 		failure = TestLength<T>(length) || failure;
 
 	return failure;

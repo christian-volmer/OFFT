@@ -54,19 +54,7 @@ Complete code examples, also for multi-dimensional transforms can be found in th
 
 ## Performance
 
-OFFT can keep up with the best libraries available. Below is a runtime comparison against FFTW3 (<http://www.fftw.org>) and against Wolfram Mathematica 13.0 (<https://www.wolfram.com/mathematica>, I assume it uses the Intel MKL) on my old i5-2450M with 2.5 GHz. Times are in seconds, smaller numbers are better.
-
-| Length     | OFFT <br> (one core)      | FFTW3 <br> w/o SSE2 | FFTW3 <br> with SSE2 | Mathematica <br> (one core) | Mathematica <br> (two cores) |
-|------------|-----------|---------------------|----------------------|------------------------------|-------------------------------|
-| 4194304    | 0.37 s    |  0.36 s             |  0.31 s              | 0.33 s                       | 0.25 s                        |
-| 8388608    | 0.80 s    |  0.80 s             |  0.69 s              | 0.67 s                       | 0.55 s                        |
-| 8388609    | 3.26 s    |  2.36 s             |  2.97 s              | 2.66 s                       | 2.63 s                        |
-| 8388613    | 3.38 s    |  1.97 s             |  1.57 s              | 1.41 s                       | 0.96 s                        |
-| 16777216   | 2.40 s    |  1.79 s             |  1.59 s              | 1.38 s                       | 1.03 s                        |
-| 33554432   | 5.22 s    |  3.65 s             |  3.51 s              | 2.94 s                       | 2.39 s                        |
-| 33554433   | 6.28 s    |  6.80 s             |  6.04 s              | 7.37 s                       | 5.08 s                        |
-| 33554435   | 9.23 s    | 13.22 s             | 11.99 s              | 9.24 s                       | 8.45 s                        |
-
+The mission of OFFT is to provide a truly open FFT library that delivers competitive performance for arbitrary length transforms and, at the same time, keeps the code size and maintenance effort of the library reasonable. To understand what that means, I am providing an [OFFT speed comparison](doc/OfftSpeedComparison.md) against two popular libraries.
 
 ## The directory structure
 
@@ -88,6 +76,8 @@ The recommended way is to download the [latest release package published on GitH
 ### Using Microsoft Visual Studio
 
 If you are a Visual Studio user, just open the provided Solution file `offt.sln` from the root directory and you are set. 
+
+**NOTE:** the supplied Solution file was created in Visual Studio 2017 and uses the v141 Platform Toolset. If you wish to compile in Visual Studio 2013, you will have to change the Platform Toolset to v120 by right-clicking on each project and changing the tool-set accordingly. Make sure to do this for all configurations (Release, Debug) and all platforms (x86, x64).
 
 ### Using CMake
 
@@ -131,7 +121,13 @@ OFFT employs the following methods and algorithms
 
 ## Release history
 
-### *Changes pending for the next release*
+### Changes pending for the next release
+*(none)*
+
+### Version 0.2.0 (30 April 2023)
+ - Speed of GCC compile is now similar to Visual Studio
+ - Added support for Visual Studio 2013
+ - BUGFIX: fixed potential crash due to an uninitialised member variable
  - Moved public header files to dedicated directory
  - Cleaned up the structure of the `CMakeLists.txt` files. 
     - Public include directory is now a property of the OFFT library itself. 

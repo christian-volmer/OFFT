@@ -11,5 +11,6 @@ namespace offt {
 FourierParameters const FourierParameters::Default  = { 1, 1 };
 FourierParameters const FourierParameters::WolframLanguage = { 0, 1 };
 FourierParameters const FourierParameters::Mathematica = FourierParameters::WolframLanguage;
+FourierParameters const FourierParameters::FFTW = { 1, -1 };
 
 }
