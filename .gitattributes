@@ -1,4 +1,3 @@
 /.git*           export-ignore
 /.clang-format   export-ignore
-/theory          export-ignore 
-/theory/*        linguist-vendored
+/theory          export-ignore linguist-vendored
