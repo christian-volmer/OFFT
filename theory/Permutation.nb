@@ -1,0 +1,95 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 13.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      2822,         87]
+NotebookOptionsPosition[      2254,         69]
+NotebookOutlinePosition[      2654,         85]
+CellTagsIndexPosition[      2611,         82]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Decimating Permutation", "Section",ExpressionUUID->"24c66286-405a-401a-9f1d-eb4255015765"],
+
+Cell["\<\
+A permutation can be carried out in-place by identifying its cycles. Cycles \
+operate on non-overlapping sets of elements and can be executed in-place.
+See Fich, Munro, Poblete - Permuting In Place (1995)\
+\>", "Text",ExpressionUUID->"39864540-6202-4873-8cdf-b50418fe880f"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"n1", "=", "4"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"n2", "=", "6"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"elements", "=", 
+   RowBox[{"Range", "[", 
+    RowBox[{"n1", " ", "n2"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"permutation", "=", 
+   RowBox[{"Join", "@@", 
+    RowBox[{"Table", "[", 
+     RowBox[{
+      RowBox[{"Downsample", "[", 
+       RowBox[{
+        RowBox[{"elements", "\[LeftDoubleBracket]", 
+         RowBox[{"i", ";;"}], "\[RightDoubleBracket]"}], ",", "n2"}], "]"}], 
+      ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "n2"}], "}"}]}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"PermutationCycles", "[", "permutation", "]"}], 
+   "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], "//", 
+  "TableForm"}], "\[IndentingNewLine]", 
+ RowBox[{"Count", "[", 
+  RowBox[{
+   RowBox[{"Differences", "@", 
+    RowBox[{
+     RowBox[{"PermutationCycles", "[", "permutation", "]"}], 
+     "\[LeftDoubleBracket]", 
+     RowBox[{"1", ",", "All", ",", "1"}], "\[RightDoubleBracket]"}]}], ",", 
+   RowBox[{"Except", "[", "1", "]"}]}], "]"}]}], "Input",
+ CellLabel->
+  "In[794]:=",ExpressionUUID->"760334d5-0685-41ec-9c63-36ee4ec6153e"]
+}, Open  ]]
+},
+WindowSize->{1904, 981},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (February 4, 2022)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"b006630e-2ce2-440d-b2d3-434dc35c748b"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 96, 0, 67, "Section",ExpressionUUID->"24c66286-405a-401a-9f1d-eb4255015765"],
+Cell[679, 24, 283, 4, 58, "Text",ExpressionUUID->"39864540-6202-4873-8cdf-b50418fe880f"],
+Cell[965, 30, 1273, 36, 130, "Input",ExpressionUUID->"760334d5-0685-41ec-9c63-36ee4ec6153e"]
+}, Open  ]]
+}
+]
+*)
+
