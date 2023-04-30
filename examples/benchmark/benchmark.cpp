@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 		return SelfTest();
 	}
 	else
-		RandomisedTest(1, 10000, 0.1);
+		RandomisedTest(2, 1000000, 0.1);
 
 	return 0;
 }
