@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <iostream>
 
 namespace offt {
 namespace backend {
@@ -89,12 +90,88 @@ std::unique_ptr<ModuleBase<valueT>> ModuleManager<valueT>::ConstructModule(Phaso
 }
 
 template<typename valueT>
+size_t ModuleManager<valueT>::CostForLength(size_t length) const
+{
+	/*
+		//size_t bestFactor = 0;
+		size_t bestCost = 0;
+		for (auto const &module : mStandardModules) {
+
+			size_t moduleFactor = module.first;
+
+			if (length % moduleFactor == 0) {
+
+				size_t remainingLength = length / moduleFactor;
+				size_t remainingCost = CostForLength(remainingLength);
+
+				StandardModuleComplexity complexity = module.second->GetComplexity();
+				size_t moduleCost = complexity.AdditionCount + complexity.MultiplicationCount;
+
+				size_t thisCost = moduleCost * remainingLength + moduleFactor * remainingCost;
+
+				if (bestCost == 0 || thisCost < bestCost) {
+
+					//bestFactor = moduleFactor;
+					bestCost = thisCost;
+				}
+			}
+		}
+	*/
+
+	return 4 * length;
+}
+
+template<typename valueT>
 std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 {
 	if (!(length >= 1))
 		throw std::invalid_argument("ModuleManager::Factorise(): parameter 'length' must be greater than or equal to '1'.");
 
 	std::vector<size_t> factors;
+
+	/*
+
+	// Attempt to predict runtime based on standard module complexity failed. 
+
+	bool doingStandardModules = true;
+	while (doingStandardModules) {
+
+		doingStandardModules = false;
+		size_t bestFactor = 0;
+		double bestCost = 0;
+		for (auto const &module : mStandardModules) {
+
+			size_t moduleFactor = module.first;
+
+			if (length % moduleFactor == 0) {
+
+				size_t remainingLength = length / moduleFactor;
+				double remainingCost = 20 * double(remainingLength) * std::log(double(remainingLength));
+
+				StandardModuleComplexity complexity = module.second->GetComplexity();
+				size_t moduleCost = complexity.AdditionCount + complexity.MultiplicationCount;
+
+				double thisCost = moduleCost * remainingLength + moduleFactor * remainingCost;
+
+				// std::cout << "Factor = " << moduleFactor << ": cost = " << thisCost << "\n";
+
+				if (bestCost == 0 || thisCost < bestCost) {
+
+					bestFactor = moduleFactor;
+					bestCost = thisCost;
+				}
+			}
+		}
+
+		if (bestFactor != 0) {
+
+			factors.push_back(bestFactor);
+			length /= bestFactor;
+			doingStandardModules = true;
+		}
+	}
+
+	*/
 
 	for (auto factorIt = mStandardModules.crbegin(); factorIt != mStandardModules.crend();) {
 
@@ -106,6 +183,52 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 		else
 			++factorIt;
 	}
+
+	/*
+
+	// Equalising the list of standard factors sometimes helps, sometimes doesn't.
+	// 25 20 2 ---> 10 10 10   improves
+	// 32 32 32 32 4 ---> 16 16 16 32 32   degrades
+
+	for (auto factor : factors)
+		std::cout << " " << factor;
+
+	std::cout << " ---> ";
+
+	bool equalise = factors.size() >= 2;
+	while (equalise) {
+
+		equalise = false;
+		std::sort(factors.begin(), factors.end());
+		size_t &min = factors.front();
+		size_t max = factors.back();
+
+		for (size_t c : { 5, 4, 3, 2 }) {
+
+			if (min * c < max) {
+
+				for (auto it = std::next(factors.begin()); it != factors.end(); ++it) {
+
+					if (*it % c == 0 && *it / c > min) {
+
+						*it /= c;
+						min *= c;
+						equalise = true;
+						break;
+					}
+				}
+			}
+
+			if (equalise)
+				break;
+		}
+	}
+
+	for (auto factor : factors)
+		std::cout << factor << " ";
+
+	std::cout << "\n";
+	*/
 
 	math::FactorInteger(length, [&factors](ptrdiff_t factor) {
 		if (factor != 1)

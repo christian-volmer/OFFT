@@ -23,6 +23,8 @@ private:
 	template<std::size_t N>
 	void RegisterStandardModule();
 
+	size_t CostForLength(size_t length) const;
+
 public:
 
 	ModuleManager();
