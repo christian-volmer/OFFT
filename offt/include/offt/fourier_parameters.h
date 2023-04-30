@@ -23,6 +23,9 @@ struct FourierParameters {
 	// Default values used in Mathematica: { 0, 1 }
 	static const FourierParameters Mathematica;
 
+	// Default values used by the FFTW library: { 1, -1 }
+	static const FourierParameters FFTW;
+
 	FourierParameters(int a, int b) :
 		a(a),
 		b(b)
