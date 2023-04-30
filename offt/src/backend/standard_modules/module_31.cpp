@@ -12,6 +12,14 @@ namespace backend {
 using std::size_t;
 using std::ptrdiff_t;
 
+/*
+	Number of additions       : 816
+	Number of multiplications : 160
+*/
+
+template<> StandardModuleComplexity const StandardModule<float, 31>::Complexity = { 816, 160 };
+template<> StandardModuleComplexity const StandardModule<double, 31>::Complexity = { 816, 160 };
+
 template<typename valueT>
 static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement)
 {

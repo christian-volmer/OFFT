@@ -10,14 +10,14 @@
 #include "standard_module.h"
 #include <offt/math/factor_integer.h>
 
-#include <cassert>
 #include <algorithm>
+#include <cassert>
 
 namespace offt {
 namespace backend {
 
-using std::size_t;
 using std::ptrdiff_t;
+using std::size_t;
 
 template class ModuleManager<float>;
 template class ModuleManager<double>;
@@ -29,7 +29,7 @@ void ModuleManager<valueT>::RegisterStandardModule()
 	if (mStandardModules.count(N) > 0)
 		throw std::invalid_argument("ModuleManager::RegisterStandardModule(): a module of given size 'N' has already been registered.");
 
-	mStandardModules.emplace(N, StandardModule<valueT, N>::Construct);
+	mStandardModules.emplace(N, std::unique_ptr<StandardModuleFactoryBase<valueT> const>(new StandardModuleFactory<valueT, N>()));
 }
 
 template<typename valueT>
@@ -70,6 +70,9 @@ ModuleManager<valueT>::ModuleManager() :
 	RegisterStandardModule<30>();
 	RegisterStandardModule<31>();
 	RegisterStandardModule<32>();
+
+	// RegisterStandardModule<64>();
+	// RegisterStandardModule<128>();
 }
 
 template<typename valueT>
@@ -77,10 +80,10 @@ std::unique_ptr<ModuleBase<valueT>> ModuleManager<valueT>::ConstructModule(Phaso
 {
 	if (!(length >= 2))
 		throw std::invalid_argument("ModuleManager::ConstructModule(): parameter 'length' must be greater than or equal to '2'.");
-	
+
 	auto found = mStandardModules.find(length);
 	if (found != mStandardModules.end())
-		return found->second(phasors, remainingLength, twiddleStep);
+		return found->second->Construct(phasors, remainingLength, twiddleStep);
 
 	return std::unique_ptr<ModuleBase<valueT>>(new RaderModule<valueT>(phasors, length, remainingLength, twiddleStep));
 }
@@ -105,10 +108,9 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 	}
 
 	math::FactorInteger(length, [&factors](ptrdiff_t factor) {
-
 		if (factor != 1)
 			factors.push_back(static_cast<size_t>(factor));
-		});
+	});
 
 	std::sort(factors.begin(), factors.end());
 

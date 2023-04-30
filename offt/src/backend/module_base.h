@@ -13,7 +13,7 @@ namespace offt {
 namespace backend {
 
 template<typename valueT>
-struct ModuleBase {
+class ModuleBase {
 
 protected:
 
@@ -32,7 +32,7 @@ public:
 	std::size_t mRemainingLength;
 	std::size_t mTwiddleStep;
 
-	virtual ~ModuleBase() {}
+	virtual ~ModuleBase() { }
 
 	virtual std::size_t Prepare(Storage<valueT> &fourierStorage) = 0;
 	virtual void SetTemp(valueT *pTemp) = 0;
@@ -42,8 +42,8 @@ public:
 	ModuleBase(ModuleBase const &) = delete;
 	ModuleBase(ModuleBase &&) = delete;
 
-	void operator =(ModuleBase const &) = delete;
-	void operator =(ModuleBase &&) = delete;
+	void operator=(ModuleBase const &) = delete;
+	void operator=(ModuleBase &&) = delete;
 };
 
 }
