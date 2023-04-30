@@ -121,10 +121,13 @@ OFFT employs the following methods and algorithms
 
 ## Release history
 
-### *Changes pending for the next release*
+### Changes pending for the next release
+*(none)*
+
+### Version 0.2.0 (30 April 2023)
  - Speed of GCC compile is now similar to Visual Studio
  - Added support for Visual Studio 2013
- - BUGFIX: potential crash due to an uninitialised member variable
+ - BUGFIX: fixed potential crash due to an uninitialised member variable
  - Moved public header files to dedicated directory
  - Cleaned up the structure of the `CMakeLists.txt` files. 
     - Public include directory is now a property of the OFFT library itself. 
