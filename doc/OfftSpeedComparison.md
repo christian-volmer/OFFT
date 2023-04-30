@@ -27,7 +27,7 @@ The speed test was run on my Intel i5-2450M laptop computer with 2.5 GHz running
 
 ## Results
 
-Numbers are nanoseconds per $n \log n$, where $n$ is the size of the transform and $\log$ the natural logarithm. For example, OFFT required $8.9 \times 16777216 \times 16.64 = 2.48\,\text{seconds}$ for the length-16777216 transform. 
+Numbers are nanoseconds per $n \log n$, where $n$ is the size of the transform and $\log$ the natural logarithm. For example, OFFT required $8.9 \times 16777216 \times 16.64 = 2.48~\text{seconds}$ for the length-16777216 transform. 
 
 Columns are as follows
 - **OFFT:** runtime of the OFFT
