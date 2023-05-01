@@ -6,8 +6,9 @@
 
 #pragma once
 
-#include <cstddef>
+#include <cassert>
 #include <complex>
+#include <cstddef>
 #include <vector>
 
 namespace offt {
@@ -22,7 +23,7 @@ private:
 
 	using realT = valueT;
 	using complexT = std::complex<valueT>;
-	
+
 	std::size_t mLength;
 
 	std::vector<complexT> mLargePhasors;
@@ -41,15 +42,34 @@ public:
 
 	void Multiply(realT &destR, realT &destI, realT const &srcR, realT const &srcI, std::size_t index) const
 	{
-		complexT phasor = mSmallPhasors[index % SPLIT_LENGTH];
-		if (!mLargePhasors.empty() && index >= SPLIT_LENGTH)
-			phasor *= mLargePhasors[index / SPLIT_LENGTH];
+		if (index == 0) {
 
-		realT cos = phasor.real();
-		realT sin = phasor.imag();
+			destR = srcR;
+			destI = srcI;
+		}
+		else {
+			complexT small = mSmallPhasors[index % SPLIT_LENGTH];
+			realT sr = small.real();
+			realT si = small.imag();
 
-		destR = srcR * cos - srcI * sin;
-		destI = srcR * sin + srcI * cos;
+			if (index < SPLIT_LENGTH) {
+
+				destR = sr * srcR - si * srcI;
+				destI = sr * srcI + si * srcR;
+			}
+			else {
+
+				complexT large = mLargePhasors[index / SPLIT_LENGTH];
+				realT lr = large.real();
+				realT li = large.imag();
+
+				realT t1 = lr * sr - li * si;
+				realT t2 = lr * si + li * sr;
+
+				destR = t1 * srcR - t2 * srcI;
+				destI = t1 * srcI + t2 * srcR;
+			}
+		}
 	}
 
 	void Twiddle(realT *t, realT const *real, realT const *imag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement, size_t length) const;
