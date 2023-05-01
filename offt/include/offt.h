@@ -9,15 +9,15 @@
 'offt.h' is the main header file for the OFFT library.
 It provides the 'Fourier' class in the 'offt' namespace, which
 is the primary interface for performing one- and multi-
-dimensional Fast Fourier Transforms and the corresponding 
+dimensional Fast Fourier Transforms and the corresponding
 inverses.
 
 */
 
 #pragma once
 
-#include "offt/compat.h"
 #include "offt/backend/fourier_base.h"
+#include "offt/compat.h"
 
 namespace offt {
 
@@ -26,7 +26,7 @@ namespace offt {
 //
 // Template parameters:
 //    'valueT'   floating point type to use: 'float' or 'double'
-//    'depth'    array depth: specify '1' for one-dimensional 
+//    'depth'    array depth: specify '1' for one-dimensional
 //               transforms, '2' for two-dimensional, and so on.
 template<typename valueT = double, std::size_t depth = 1>
 class Fourier : protected backend::FourierBase<valueT> {
@@ -49,7 +49,7 @@ public:
 	// Constructor parameters:
 	//    'dimensions'          array of the dimensions of the fast Fourier transform.
 	//    'fourierParameters'   Fourier parameters that specify the convention to use for
-	//                          the scaling and the sign of the imaginary part of the 
+	//                          the scaling and the sign of the imaginary part of the
 	//                          transform result.
 	Fourier(std::size_t const (&dimensions)[depth], FourierParameters const &fourierParameters = FourierParameters::Default) :
 		FourierBase(dimensions, depth, fourierParameters)
@@ -58,21 +58,21 @@ public:
 
 	~Fourier() = default;
 
-	// Returns the depth (i.e., the number of dimensions) of the transform, which is 
+	// Returns the depth (i.e., the number of dimensions) of the transform, which is
 	// equal to the 'depth' template parameter.
 	std::size_t OFFT_OPTIONAL_CONSTEXPR GetDepth() const
 	{
 		return depth;
 	}
 
-	// Returns a pointer to the dimensions of the transform. The array points to 
+	// Returns a pointer to the dimensions of the transform. The array points to
 	// has length equal to the 'depth' template parameter.
 	std::size_t const *GetDimensions() const
 	{
 		return FourierBase::GetDimensions();
 	}
 
-	// Returns a reference to a copy of the Fourier parameters passed to the 
+	// Returns a reference to a copy of the Fourier parameters passed to the
 	// constructor.
 	FourierParameters const &GetFourierParameters() const
 	{
@@ -118,7 +118,7 @@ public:
 	using realT = valueT;
 	using complexT = std::complex<valueT>;
 
-	Fourier(size_t length, FourierParameters const &fourierParameters = FourierParameters::Default) :
+	Fourier(std::size_t length, FourierParameters const &fourierParameters = FourierParameters::Default) :
 		FourierBase(&length, 1, fourierParameters)
 	{
 	}
@@ -150,12 +150,12 @@ public:
 		FourierBase::ReleaseTemp();
 	}
 
-	void Transform(complexT *destination, ptrdiff_t destinationStride, complexT const *source, ptrdiff_t sourceStride) const
+	void Transform(complexT *destination, std::ptrdiff_t destinationStride, complexT const *source, std::ptrdiff_t sourceStride) const
 	{
 		FourierBase::Transform(destination, &destinationStride, source, &sourceStride);
 	}
 
-	void InverseTransform(complexT *destination, ptrdiff_t destinationStride, complexT const *source, ptrdiff_t sourceStride) const
+	void InverseTransform(complexT *destination, std::ptrdiff_t destinationStride, complexT const *source, std::ptrdiff_t sourceStride) const
 	{
 		FourierBase::InverseTransform(destination, &destinationStride, source, &sourceStride);
 	}

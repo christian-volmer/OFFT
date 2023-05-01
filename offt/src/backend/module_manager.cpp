@@ -16,9 +16,6 @@
 namespace offt {
 namespace backend {
 
-using std::ptrdiff_t;
-using std::size_t;
-
 template class ModuleManager<float>;
 template class ModuleManager<double>;
 
@@ -212,7 +209,7 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 				}
 			}
 		}
-		
+
 		std::sort(factors.begin(), factors.end());
 	}
 

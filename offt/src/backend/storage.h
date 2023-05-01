@@ -14,12 +14,15 @@
 namespace offt {
 namespace backend {
 
+using std::ptrdiff_t;
+using std::size_t;
+
 template<typename valueT>
 class RaderData {
 
 public:
 
-	std::vector<std::size_t> mPermutation;
+	std::vector<size_t> mPermutation;
 	std::vector<valueT> mCoefficients;
 
 	RaderData() :
@@ -34,15 +37,15 @@ class Storage {
 
 private:
 
-	std::map<std::size_t, Phasors<valueT>> mPhasors;
-	std::map<std::size_t, RaderData<valueT>> mRaderData; 
+	std::map<size_t, Phasors<valueT>> mPhasors;
+	std::map<size_t, RaderData<valueT>> mRaderData;
 
 public:
 
 	Storage();
 
-	Phasors<valueT> const &GetPhasors(std::size_t length);
-	RaderData<valueT> &GetRaderData(std::size_t length);
+	Phasors<valueT> const &GetPhasors(size_t length);
+	RaderData<valueT> &GetRaderData(size_t length);
 };
 
 }

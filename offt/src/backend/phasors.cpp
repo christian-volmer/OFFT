@@ -11,12 +11,8 @@
 namespace offt {
 namespace backend {
 
-using std::size_t;
-using std::ptrdiff_t;
-
 template class Phasors<float>;
 template class Phasors<double>;
-
 
 template<typename valueT>
 Phasors<valueT>::Phasors(size_t length) :
@@ -56,7 +52,7 @@ void Phasors<valueT>::Twiddle(realT *t, realT const *real, realT const *imag, pt
 {
 	for (std::size_t i = 0; i < length; ++i) {
 
-		Multiply(t[2*i], t[2*i+1], real[i * stride], imag[i * stride], twiddleStart + i * twiddleIncrement);
+		Multiply(t[2 * i], t[2 * i + 1], real[i * stride], imag[i * stride], twiddleStart + i * twiddleIncrement);
 	}
 }
 

@@ -10,9 +10,6 @@
 namespace offt {
 namespace backend {
 
-using std::ptrdiff_t;
-using std::size_t;
-
 template class Program<float>;
 template class Program<double>;
 

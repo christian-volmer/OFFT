@@ -13,9 +13,6 @@
 namespace offt {
 namespace backend {
 
-using std::size_t;
-using std::ptrdiff_t;
-
 template class RaderModule<float>;
 template class RaderModule<double>;
 

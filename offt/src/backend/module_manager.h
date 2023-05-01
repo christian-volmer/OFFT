@@ -13,14 +13,17 @@
 namespace offt {
 namespace backend {
 
+using std::ptrdiff_t;
+using std::size_t;
+
 template<typename valueT>
 class ModuleManager {
 
 private:
 
-	std::map<std::size_t, std::unique_ptr<StandardModuleFactoryBase<valueT> const>> mStandardModules;
+	std::map<size_t, std::unique_ptr<StandardModuleFactoryBase<valueT> const>> mStandardModules;
 
-	template<std::size_t N>
+	template<size_t N>
 	void RegisterStandardModule();
 
 	size_t CostForLength(size_t length) const;
@@ -29,8 +32,8 @@ public:
 
 	ModuleManager();
 
-	std::unique_ptr<ModuleBase<valueT>> ConstructModule(Phasors<valueT> const &phasors, std::size_t length, std::size_t remainingLength, std::size_t twiddleStep) const;
-	std::vector<std::size_t> Factorise(std::size_t length) const;
+	std::unique_ptr<ModuleBase<valueT>> ConstructModule(Phasors<valueT> const &phasors, size_t length, size_t remainingLength, size_t twiddleStep) const;
+	std::vector<size_t> Factorise(size_t length) const;
 };
 
 }

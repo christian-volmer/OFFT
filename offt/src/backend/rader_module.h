@@ -12,6 +12,9 @@
 namespace offt {
 namespace backend {
 
+using std::size_t;
+using std::ptrdiff_t;
+
 template<typename valueT>
 class RaderModule : public ModuleBase<valueT> {
 
@@ -27,12 +30,12 @@ public:
 	using ModuleBase<valueT>::mPhasors;
 	using ModuleBase<valueT>::mLength;
 
-	RaderModule(Phasors<valueT> const &phasors, std::size_t length, std::size_t remainingLength, std::size_t twiddleStep);
+	RaderModule(Phasors<valueT> const &phasors, size_t length, size_t remainingLength, size_t twiddleStep);
 
-	virtual std::size_t Prepare(Storage<valueT> &storage) override;
+	virtual size_t Prepare(Storage<valueT> &storage) override;
 	virtual void SetTemp(valueT *pTemp) override;
 
-	virtual void Compute(valueT *pReal, valueT *pImag, std::ptrdiff_t stride, std::size_t twiddleStart, std::size_t twiddleIncrement) const override;
+	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const override;
 };
 
 

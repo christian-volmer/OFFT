@@ -9,11 +9,14 @@
 #include "module_base.h"
 #include "storage.h"
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 namespace offt {
 namespace backend {
+
+using std::ptrdiff_t;
+using std::size_t;
 
 template<typename valueT>
 class Program {
@@ -28,16 +31,16 @@ public:
 	Program();
 	~Program();
 
-	void Prepare(Storage<valueT> &storage, std::size_t length);
+	void Prepare(Storage<valueT> &storage, size_t length);
 
-	std::size_t GetLength() const;
+	size_t GetLength() const;
 
-	std::size_t GetTempRequirement() const;
+	size_t GetTempRequirement() const;
 	void SetTemp(valueT *pTemp);
 
-	void ExecuteInPlaceOutOfOrderTime(valueT *pReal, valueT *pImag, std::ptrdiff_t stride) const;
-	void ExecuteInPlaceOutOfOrderFrequency(valueT *pReal, valueT *pImag, std::ptrdiff_t stride) const;
-	void ExecuteOutOfPlaceInOrder(valueT *pDestReal, valueT *pDestImag, std::ptrdiff_t destStride, valueT const *pSrcReal, valueT const *pSrcImag, std::ptrdiff_t srcStride) const;
+	void ExecuteInPlaceOutOfOrderTime(valueT *pReal, valueT *pImag, ptrdiff_t stride) const;
+	void ExecuteInPlaceOutOfOrderFrequency(valueT *pReal, valueT *pImag, ptrdiff_t stride) const;
+	void ExecuteOutOfPlaceInOrder(valueT *pDestReal, valueT *pDestImag, ptrdiff_t destStride, valueT const *pSrcReal, valueT const *pSrcImag, ptrdiff_t srcStride) const;
 };
 
 }

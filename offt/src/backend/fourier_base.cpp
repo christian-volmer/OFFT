@@ -4,19 +4,16 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
-#include <offt/compat.h>
-#include <offt/backend/fourier_base.h>
-#include <offt/math/list_product.h>
 #include "program.h"
+#include <offt/backend/fourier_base.h>
+#include <offt/compat.h>
+#include <offt/math/list_product.h>
 
-#include <cassert>
 #include <algorithm>
+#include <cassert>
 
 namespace offt {
 namespace backend {
-
-using std::size_t;
-using std::ptrdiff_t;
 
 template class FourierBase<float>;
 template class FourierBase<double>;
@@ -35,7 +32,7 @@ private:
 	// Number of dimensions that are greater than 1.
 	size_t mNonTrivialDepth;
 
-	// The dimensions, i.e., the lengths of the one-dimensional transforms at each 
+	// The dimensions, i.e., the lengths of the one-dimensional transforms at each
 	// level of a multi-dimensional transform
 	std::unique_ptr<size_t[]> mDimensions;
 
@@ -79,7 +76,7 @@ private:
 			return;
 		}
 
-		// First, we need to know the index of the largest dimension 
+		// First, we need to know the index of the largest dimension
 		// of a multi-dimensional transform. This is required by the
 		// later call to 'AdditionalTempRequirementForLevel()'.
 		size_t largestDimension = 0;
@@ -93,7 +90,7 @@ private:
 		}
 
 		// Each level may require temporary working memory for the
-		// FFT program execution. More memory may be required for 
+		// FFT program execution. More memory may be required for
 		// multi-dimensional transforms.
 		for (size_t level = 0; level < mDepth; ++level) {
 
@@ -140,7 +137,6 @@ private:
 
 				mPrograms[applyLevel].ExecuteOutOfPlaceInOrder(&mTemp[0], &mTemp[1], 2,
 					pDestReal, pDestImag, destStride);
-
 
 				if (scale != 1) {
 
@@ -301,8 +297,7 @@ public:
 			destinationStrides,
 			reinterpret_cast<realT const *>(source) + 0,
 			reinterpret_cast<realT const *>(source) + 1,
-			sourceStrides, 2, mConjugate != inverse, inverse ? mInverseScale : mForwardScale
-		);
+			sourceStrides, 2, mConjugate != inverse, inverse ? mInverseScale : mForwardScale);
 	}
 };
 
@@ -311,7 +306,6 @@ FourierBase<valueT>::FourierBase(size_t const *dimensions, size_t depth, Fourier
 	mpImpl(new Impl(dimensions, depth, fourierParameters))
 {
 }
-
 
 template<typename valueT>
 FourierBase<valueT>::~FourierBase()
@@ -358,4 +352,3 @@ void FourierBase<valueT>::InverseTransform(complexT *destination, ptrdiff_t cons
 
 }
 }
-
