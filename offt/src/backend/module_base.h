@@ -39,6 +39,10 @@ public:
 
 	virtual void Compute(valueT *pReal, valueT *pImag, std::ptrdiff_t stride, std::size_t twiddleStart, std::size_t twiddleIncrement) const = 0;
 
+	void ComputeLoop(
+		valueT *pReal, valueT *pImag, std::ptrdiff_t step,
+		std::size_t twiddleStep, std::size_t twiddleIncrement, std::size_t twiddleIncrementStep) const;
+
 	ModuleBase(ModuleBase const &) = delete;
 	ModuleBase(ModuleBase &&) = delete;
 

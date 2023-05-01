@@ -5,9 +5,8 @@
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 #include "module_manager.h"
-
 #include "rader_module.h"
-#include "standard_module.h"
+
 #include <offt/math/factor_integer.h>
 
 #include <algorithm>
