@@ -27,7 +27,7 @@ private:
 	using realT = valueT;
 	using complexT = std::complex<valueT>;
 
-	std::size_t mLength;
+	size_t const mLength;
 
 	std::vector<complexT> mLargePhasors;
 	std::vector<complexT> mSmallPhasors;
@@ -39,11 +39,37 @@ private:
 
 public:
 
-	Phasors(std::size_t length);
+	Phasors(size_t length);
 
-	std::size_t GetLength() const;
+	size_t GetLength() const;
 
-	void Multiply(realT &destR, realT &destI, realT const &srcR, realT const &srcI, std::size_t index) const
+	/*
+
+	void Load(realT &twiddleR, realT &twiddleI, size_t index) const
+	{
+		complexT small = mSmallPhasors[index % SPLIT_LENGTH];
+		realT sr = small.real();
+		realT si = small.imag();
+
+		if (index < SPLIT_LENGTH) {
+
+			twiddleR = sr;
+			twiddleI = si;
+		}
+		else {
+
+			complexT large = mLargePhasors[index / SPLIT_LENGTH];
+			realT lr = large.real();
+			realT li = large.imag();
+
+			twiddleR = sr * lr - si * li;
+			twiddleI = sr * li + si * lr;
+		}
+	}
+
+	*/
+
+	void Multiply(realT &destR, realT &destI, realT const &srcR, realT const &srcI, size_t index) const
 	{
 		if (index == 0) {
 
@@ -75,7 +101,12 @@ public:
 		}
 	}
 
+	/*
+
 	void Twiddle(realT *t, realT const *real, realT const *imag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement, size_t length) const;
+	void TwiddleInplace(realT *real, realT *imag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement, size_t length) const;
+
+	*/
 };
 
 }

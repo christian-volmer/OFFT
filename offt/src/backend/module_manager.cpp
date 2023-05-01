@@ -188,12 +188,14 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 	// See if we can enlarge them at the cost of the larger ones
 
 	std::sort(factors.begin(), factors.end());
+
 	/*
 		for (auto factor : factors)
 			std::cout << " " << factor;
 
 		std::cout << " ---> ";
 	*/
+
 	if (factors.size() >= 2) {
 
 		size_t &min = factors.front();
@@ -219,12 +221,21 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 
 		std::cout << "\n";
 	*/
+
 	math::FactorInteger(length, [&factors](ptrdiff_t factor) {
 		if (factor != 1)
 			factors.push_back(static_cast<size_t>(factor));
 	});
 
 	std::sort(factors.begin(), factors.end());
+
+	/*
+	std::cout << ": ";
+
+	for (auto factor : factors)
+		std::cout << " " << factor;
+
+	*/
 
 	return factors;
 }
