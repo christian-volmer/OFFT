@@ -35,7 +35,7 @@ public:
 	{
 	}
 
-	static void RecursiveExecuteInPlaceOutOfOrderTime(valueT *pReal, valueT *pImag, ptrdiff_t stride, typename ItemListType::const_iterator const &item)
+	static void RecursiveExecuteInPlaceOutOfOrderTime(valueT *pReal, valueT *pImag, ptrdiff_t const stride, typename ItemListType::const_iterator const &item)
 	{
 		if ((*item)->mRemainingLength > 1) {
 
@@ -53,9 +53,9 @@ public:
 				(*item)->mRemainingLength * stride, 0, i * (*item)->mTwiddleStep);
 	}
 
-	static void RecursiveExecuteInPlaceOutOfOrderFrequency(valueT *pReal, valueT *pImag, ptrdiff_t stride, typename ItemListType::const_iterator const &item, size_t twiddleStep)
+	static void RecursiveExecuteInPlaceOutOfOrderFrequency(valueT *pReal, valueT *pImag, ptrdiff_t const stride, typename ItemListType::const_iterator const &item, size_t const twiddleStep)
 	{
-		size_t twiddleIncrement = (*item)->mRemainingLength * twiddleStep;
+		size_t const twiddleIncrement = (*item)->mRemainingLength * twiddleStep;
 
 		for (size_t i = 0; i < (*item)->mRemainingLength; ++i)
 			(*item)->Compute(
@@ -73,7 +73,7 @@ public:
 		}
 	}
 
-	static void RecursiveExecuteOutOfPlaceInOrder(valueT *pDestReal, valueT *pDestImag, ptrdiff_t destStride, valueT const *pSrcReal, valueT const *pSrcImag, ptrdiff_t srcStride, typename ItemListType::const_iterator const &item)
+	static void RecursiveExecuteOutOfPlaceInOrder(valueT *pDestReal, valueT *pDestImag, ptrdiff_t const destStride, valueT const *pSrcReal, valueT const *pSrcImag, ptrdiff_t const srcStride, typename ItemListType::const_iterator const &item)
 	{
 		if ((*item)->mRemainingLength > 1) {
 
