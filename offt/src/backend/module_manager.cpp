@@ -72,6 +72,9 @@ ModuleManager<valueT>::ModuleManager() :
 	RegisterStandardModule<31>();
 	RegisterStandardModule<32>();
 
+	//
+	// Those larger modules slow things down tremendously
+	//
 	// RegisterStandardModule<64>();
 	// RegisterStandardModule<128>();
 }
@@ -93,29 +96,30 @@ template<typename valueT>
 size_t ModuleManager<valueT>::CostForLength(size_t length) const
 {
 	/*
-		//size_t bestFactor = 0;
-		size_t bestCost = 0;
-		for (auto const &module : mStandardModules) {
 
-			size_t moduleFactor = module.first;
+	// Attempt to predict runtime based on standard module complexity failed. Well, this was mainly fiddling around without too much thinking...
 
-			if (length % moduleFactor == 0) {
+	size_t bestCost = 0;
+	for (auto const &module : mStandardModules) {
 
-				size_t remainingLength = length / moduleFactor;
-				size_t remainingCost = CostForLength(remainingLength);
+		size_t moduleFactor = module.first;
 
-				StandardModuleComplexity complexity = module.second->GetComplexity();
-				size_t moduleCost = complexity.AdditionCount + complexity.MultiplicationCount;
+		if (length % moduleFactor == 0) {
 
-				size_t thisCost = moduleCost * remainingLength + moduleFactor * remainingCost;
+			size_t remainingLength = length / moduleFactor;
+			size_t remainingCost = CostForLength(remainingLength);
 
-				if (bestCost == 0 || thisCost < bestCost) {
+			StandardModuleComplexity complexity = module.second->GetComplexity();
+			size_t moduleCost = complexity.AdditionCount + complexity.MultiplicationCount;
 
-					//bestFactor = moduleFactor;
-					bestCost = thisCost;
-				}
+			size_t thisCost = moduleCost * remainingLength + moduleFactor * remainingCost;
+
+			if (bestCost == 0 || thisCost < bestCost) {
+
+				bestCost = thisCost;
 			}
 		}
+	}
 	*/
 
 	return 4 * length;
@@ -131,7 +135,7 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 
 	/*
 
-	// Attempt to predict runtime based on standard module complexity failed. 
+	// Attempt to predict runtime based on standard module complexity failed. Well, this was mainly fiddling around without too much thinking...
 
 	bool doingStandardModules = true;
 	while (doingStandardModules) {
@@ -184,52 +188,41 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 			++factorIt;
 	}
 
+	// Small modules <= 4 carry significant overhead.
+	// See if we can enlarge them at the cost of the larger ones
+
+	std::sort(factors.begin(), factors.end());
 	/*
+		for (auto factor : factors)
+			std::cout << " " << factor;
 
-	// Equalising the list of standard factors sometimes helps, sometimes doesn't.
-	// 25 20 2 ---> 10 10 10   improves
-	// 32 32 32 32 4 ---> 16 16 16 32 32   degrades
+		std::cout << " ---> ";
+	*/
+	if (factors.size() >= 2) {
 
-	for (auto factor : factors)
-		std::cout << " " << factor;
-
-	std::cout << " ---> ";
-
-	bool equalise = factors.size() >= 2;
-	while (equalise) {
-
-		equalise = false;
-		std::sort(factors.begin(), factors.end());
 		size_t &min = factors.front();
-		size_t max = factors.back();
 
-		for (size_t c : { 5, 4, 3, 2 }) {
+		for (auto it = factors.rbegin(); min <= 4 && it != factors.rend(); ++it) {
 
-			if (min * c < max) {
+			for (size_t multiplier : { 5, 4, 3, 2 }) {
+				if (*it % multiplier == 0 && *it / multiplier > min) {
 
-				for (auto it = std::next(factors.begin()); it != factors.end(); ++it) {
-
-					if (*it % c == 0 && *it / c > min) {
-
-						*it /= c;
-						min *= c;
-						equalise = true;
-						break;
-					}
+					*it /= multiplier;
+					min *= multiplier;
+					break;
 				}
 			}
-
-			if (equalise)
-				break;
 		}
+		
+		std::sort(factors.begin(), factors.end());
 	}
 
-	for (auto factor : factors)
-		std::cout << factor << " ";
+	/*
+		for (auto factor : factors)
+			std::cout << factor << " ";
 
-	std::cout << "\n";
+		std::cout << "\n";
 	*/
-
 	math::FactorInteger(length, [&factors](ptrdiff_t factor) {
 		if (factor != 1)
 			factors.push_back(static_cast<size_t>(factor));
