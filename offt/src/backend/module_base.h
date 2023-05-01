@@ -28,9 +28,9 @@ protected:
 public:
 
 	Phasors<valueT> const &mPhasors;
-	std::size_t mLength;
-	std::size_t mRemainingLength;
-	std::size_t mTwiddleStep;
+	std::size_t const mLength;
+	std::size_t const mRemainingLength;
+	std::size_t const mTwiddleStep;
 
 	virtual ~ModuleBase() { }
 
