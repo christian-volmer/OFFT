@@ -98,20 +98,26 @@ void RaderModule<valueT>::SetTemp(valueT *pTemp)
 
 
 template<typename valueT>
-void RaderModule<valueT>::Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
+void RaderModule<valueT>::Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, valueT const *twiddles) const
 {
 	valueT twiddledReal0, twiddledImag0;
 
 	// The first time-domain sample is processed separately.
-	mPhasors.Multiply(twiddledReal0, twiddledImag0, pReal[0], pImag[0], twiddleStart);
+	//mPhasors.Multiply(twiddledReal0, twiddledImag0, pReal[0], pImag[0], twiddleStart);
+	ModuleBase<valueT>::ComplexMultiply(twiddledReal0, twiddledImag0, pReal[0], pImag[0], twiddles[0], twiddles[1]);
 
 	// The Rader permutation is applied to all but the first time-domain 
 	// samples -- along with the twiddling.
 	for (size_t i = 1; i < mLength; ++i) {
 
-		mPhasors.Multiply(
+		ModuleBase<valueT>::ComplexMultiply(
 			mpTemp[2 * mRaderData->mPermutation[i] + 0], mpTemp[2 * mRaderData->mPermutation[i] + 1], 
-			pReal[i * stride], pImag[i * stride], twiddleStart + i * twiddleIncrement);
+			pReal[i * stride], pImag[i * stride], 
+			twiddles[2*i+0], twiddles[2*i+1]
+		);
+		/*mPhasors.Multiply(
+			mpTemp[2 * mRaderData->mPermutation[i] + 0], mpTemp[2 * mRaderData->mPermutation[i] + 1], 
+			pReal[i * stride], pImag[i * stride], twiddleStart + i * twiddleIncrement);*/
 	}
 
 	// Transform to frequency-domain

@@ -6,6 +6,16 @@
 
 #include "module_base.h"
 
+#include <iostream>
+
+/*struct TwiddleInfo {
+	size_t length, start, increment;
+
+	friend auto operator<=>(TwiddleInfo const &, TwiddleInfo const &) = default;
+};
+
+std::map<TwiddleInfo, size_t> gTwiddles;*/
+
 namespace offt {
 namespace backend {
 
@@ -22,11 +32,21 @@ void ModuleBase<valueT>::ComputeLoop(
 
 	for (size_t i = 0; i < mRemainingLength; ++i) {
 
+		/*		std::cout << "Twiddle: "
+					<< "length = " << mLength << ", "
+					<< "twiddleStart = " << twiddleStart << ", "
+					<< "twiddleIncrement = " << twiddleIncrement << "\n";
+		*/
+
+		//		gTwiddles[{mLength, twiddleStart, twiddleIncrement}]++;
+
+		for (size_t j = 0; j < mLength; ++j)
+			mPhasors.Load(mTwiddles[2 * j], mTwiddles[2 * j + 1], twiddleStart + j * twiddleIncrement);
+
 		Compute(
 			pReal, pImag,
 			stride,
-			twiddleStart,
-			twiddleIncrement);
+			mTwiddles.data());
 
 		pReal += step;
 		pImag += step;

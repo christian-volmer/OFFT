@@ -203,7 +203,10 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 		for (auto it = factors.rbegin(); min <= 4 && it != factors.rend(); ++it) {
 
 			for (size_t multiplier : { 5, 4, 3, 2 }) {
-				if (*it % multiplier == 0 && *it / multiplier > min) {
+				if (*it % multiplier == 0
+					&& *it / multiplier > min
+					&& mStandardModules.count(*it / multiplier)
+					&& mStandardModules.count(min * multiplier)) {
 
 					*it /= multiplier;
 					min *= multiplier;
@@ -229,13 +232,10 @@ std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 
 	std::sort(factors.begin(), factors.end());
 
-	/*
-	std::cout << ": ";
+/*	std::cout << ": ";
 
 	for (auto factor : factors)
-		std::cout << " " << factor;
-
-	*/
+		std::cout << " " << factor;*/
 
 	return factors;
 }

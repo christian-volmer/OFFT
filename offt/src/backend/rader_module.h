@@ -35,7 +35,7 @@ public:
 	virtual size_t Prepare(Storage<valueT> &storage) override;
 	virtual void SetTemp(valueT *pTemp) override;
 
-	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const override;
+	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, valueT const *twiddles) const override;
 };
 
 

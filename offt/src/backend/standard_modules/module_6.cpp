@@ -18,17 +18,17 @@ template<> StandardModuleComplexity const StandardModule<float, 6>::Complexity =
 template<> StandardModuleComplexity const StandardModule<double, 6>::Complexity = { 36, 8 };
 
 template<typename valueT>
-static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement)
+static void ComputeCore(valueT *pReal, valueT *pImag, ptrdiff_t stride, valueT const *twiddles)
 {
 	valueT t0, t1, t2, t3, t4, t5, t6, t7, t8, t9;
 	valueT t10, t11, t12, t13;
 
-	phasors.Multiply(t0, t1, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
-	phasors.Multiply(t2, t3, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
-	phasors.Multiply(t4, t5, pReal[2 * stride], pImag[2 * stride], twiddleStart + 2 * twiddleIncrement);
-	phasors.Multiply(t6, t7, pReal[3 * stride], pImag[3 * stride], twiddleStart + 3 * twiddleIncrement);
-	phasors.Multiply(t8, t9, pReal[4 * stride], pImag[4 * stride], twiddleStart + 4 * twiddleIncrement);
-	phasors.Multiply(t10, t11, pReal[5 * stride], pImag[5 * stride], twiddleStart + 5 * twiddleIncrement);
+	ModuleBase<valueT>::ComplexMultiply(t0, t1, pReal[0 * stride], pImag[0 * stride], twiddles[0], twiddles[1]);
+	ModuleBase<valueT>::ComplexMultiply(t2, t3, pReal[1 * stride], pImag[1 * stride], twiddles[2], twiddles[3]);
+	ModuleBase<valueT>::ComplexMultiply(t4, t5, pReal[2 * stride], pImag[2 * stride], twiddles[4], twiddles[5]);
+	ModuleBase<valueT>::ComplexMultiply(t6, t7, pReal[3 * stride], pImag[3 * stride], twiddles[6], twiddles[7]);
+	ModuleBase<valueT>::ComplexMultiply(t8, t9, pReal[4 * stride], pImag[4 * stride], twiddles[8], twiddles[9]);
+	ModuleBase<valueT>::ComplexMultiply(t10, t11, pReal[5 * stride], pImag[5 * stride], twiddles[10], twiddles[11]);
 
 	t12 = t2 - t10;
 	t13 = t3 - t11;
@@ -80,14 +80,14 @@ static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *p
 	pImag[5 * stride] = t11 - t7;
 }
 
-template<> void StandardModule<float, 6>::Compute(float *pReal, float *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
+template<> void StandardModule<float, 6>::Compute(float *pReal, float *pImag, ptrdiff_t stride, float const *twiddles) const
 {
-	ComputeCore(mPhasors, pReal, pImag, stride, twiddleStart, twiddleIncrement);
+	ComputeCore(pReal, pImag, stride, twiddles);
 }
 
-template<> void StandardModule<double, 6>::Compute(double *pReal, double *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
+template<> void StandardModule<double, 6>::Compute(double *pReal, double *pImag, ptrdiff_t stride, double const *twiddles) const
 {
-	ComputeCore(mPhasors, pReal, pImag, stride, twiddleStart, twiddleIncrement);
+	ComputeCore(pReal, pImag, stride, twiddles);
 }
 
 }

@@ -60,7 +60,7 @@ public:
 	{
 	}
 
-	virtual void Compute(valueT *pReal, valueT *pImag, std::ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const override;
+	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, valueT const *twiddles) const override;
 };
 
 template<typename valueT>

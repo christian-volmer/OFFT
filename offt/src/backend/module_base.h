@@ -20,7 +20,10 @@ class ModuleBase {
 
 protected:
 
+	mutable std::vector<valueT> mTwiddles;
+
 	ModuleBase(Phasors<valueT> const &phasors, size_t length, size_t remainingLength, size_t twiddleStep) :
+		mTwiddles(2 * length),
 		mPhasors(phasors),
 		mLength(length),
 		mRemainingLength(remainingLength),
@@ -29,6 +32,12 @@ protected:
 	}
 
 public:
+
+	static void ComplexMultiply(valueT &outR, valueT &outI, valueT aR, valueT aI, valueT bR, valueT bI)
+	{
+		outR = aR * bR - aI * bI;
+		outI = aR * bI + aI * bR;
+	}
 
 	Phasors<valueT> const &mPhasors;
 	size_t const mLength;
@@ -40,7 +49,7 @@ public:
 	virtual size_t Prepare(Storage<valueT> &fourierStorage) = 0;
 	virtual void SetTemp(valueT *pTemp) = 0;
 
-	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const = 0;
+	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, valueT const *twiddles) const = 0;
 
 	void ComputeLoop(
 		valueT *pReal, valueT *pImag, ptrdiff_t step,
