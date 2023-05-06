@@ -4,9 +4,10 @@
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
 
+#include <offt/compat.h> // must be the first include
+
 #include "program.h"
 #include <offt/backend/fourier_base.h>
-#include <offt/compat.h>
 #include <offt/math/list_product.h>
 
 #include <algorithm>
