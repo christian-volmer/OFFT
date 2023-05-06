@@ -14,6 +14,9 @@
 namespace offt {
 namespace backend {
 
+using std::ptrdiff_t;
+using std::size_t;
+
 template<typename valueT>
 class FourierBase {
 
@@ -25,17 +28,17 @@ public:
 	using realT = valueT;
 	using complexT = std::complex<valueT>;
 
-	FourierBase(std::size_t const *dimensions, std::size_t depth, FourierParameters const &fourierParameters = FourierParameters::Default);
+	FourierBase(size_t const *dimensions, size_t depth, FourierParameters const &fourierParameters = FourierParameters::Default);
 	~FourierBase();
 
-	std::size_t GetDepth() const;
-	std::size_t const *GetDimensions() const;
+	size_t GetDepth() const;
+	size_t const *GetDimensions() const;
 
 	void EnsureTemp() const;
 	void ReleaseTemp() const;
 
-	void Transform(complexT *destination, std::ptrdiff_t const *destinationStrides, complexT const *source, std::ptrdiff_t const *sourceStrides) const;
-	void InverseTransform(complexT *destination, std::ptrdiff_t const *destinationStrides, complexT const *source, std::ptrdiff_t const *sourceStrides) const;
+	void Transform(complexT *destination, ptrdiff_t const *destinationStrides, complexT const *source, ptrdiff_t const *sourceStrides) const;
+	void InverseTransform(complexT *destination, ptrdiff_t const *destinationStrides, complexT const *source, ptrdiff_t const *sourceStrides) const;
 };
 
 }

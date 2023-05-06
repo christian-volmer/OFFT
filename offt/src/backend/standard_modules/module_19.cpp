@@ -1,5 +1,5 @@
 
-//          Copyright Christian Volmer 2022.
+//          Copyright Christian Volmer 2022, 2023.
 // Distributed under the Boost Software License, Version 1.0.
 //    (See accompanying file LICENSE_1_0.txt or copy at
 //          https://www.boost.org/LICENSE_1_0.txt)
@@ -8,9 +8,6 @@
 
 namespace offt {
 namespace backend {
-
-using std::size_t;
-using std::ptrdiff_t;
 
 /*
 	Number of additions       : 376

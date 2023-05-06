@@ -51,6 +51,7 @@
     <ClCompile Include="src\math\primitive_root.cpp" />
     <ClCompile Include="src\math\times_plus_mod.cpp" />
     <ClCompile Include="src\fourier_parameters.cpp" />
+    <ClCompile Include="src\backend\module_base.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\backend\module_base.h" />

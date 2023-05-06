@@ -12,12 +12,15 @@
 namespace offt {
 namespace backend {
 
+using std::ptrdiff_t;
+using std::size_t;
+
 template<typename valueT>
 class ModuleBase {
 
 protected:
 
-	ModuleBase(Phasors<valueT> const &phasors, std::size_t length, std::size_t remainingLength, std::size_t twiddleStep) :
+	ModuleBase(Phasors<valueT> const &phasors, size_t length, size_t remainingLength, size_t twiddleStep) :
 		mPhasors(phasors),
 		mLength(length),
 		mRemainingLength(remainingLength),
@@ -28,16 +31,20 @@ protected:
 public:
 
 	Phasors<valueT> const &mPhasors;
-	std::size_t mLength;
-	std::size_t mRemainingLength;
-	std::size_t mTwiddleStep;
+	size_t const mLength;
+	size_t const mRemainingLength;
+	size_t const mTwiddleStep;
 
 	virtual ~ModuleBase() { }
 
-	virtual std::size_t Prepare(Storage<valueT> &fourierStorage) = 0;
+	virtual size_t Prepare(Storage<valueT> &fourierStorage) = 0;
 	virtual void SetTemp(valueT *pTemp) = 0;
 
-	virtual void Compute(valueT *pReal, valueT *pImag, std::ptrdiff_t stride, std::size_t twiddleStart, std::size_t twiddleIncrement) const = 0;
+	virtual void Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const = 0;
+
+	void ComputeLoop(
+		valueT *pReal, valueT *pImag, ptrdiff_t step,
+		size_t twiddleStep, size_t twiddleIncrement, size_t twiddleIncrementStep) const;
 
 	ModuleBase(ModuleBase const &) = delete;
 	ModuleBase(ModuleBase &&) = delete;

@@ -13,6 +13,7 @@ add_library(offt
     src/math/primitive_root.cpp
     src/math/times_plus_mod.cpp                     
     src/backend/fourier_base.cpp
+    src/backend/module_base.cpp
     src/backend/module_manager.cpp
     src/backend/phasors.cpp
     src/backend/program.cpp

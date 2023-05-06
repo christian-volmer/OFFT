@@ -14,8 +14,8 @@ namespace backend {
 
 struct StandardModuleComplexity {
 
-	std::size_t const AdditionCount;
-	std::size_t const MultiplicationCount;
+	size_t const AdditionCount;
+	size_t const MultiplicationCount;
 
 	StandardModuleComplexity() :
 		AdditionCount(0),
@@ -23,24 +23,24 @@ struct StandardModuleComplexity {
 	{
 	}
 
-	StandardModuleComplexity(std::size_t additionCount, std::size_t multiplicationCount) :
+	StandardModuleComplexity(size_t additionCount, size_t multiplicationCount) :
 		AdditionCount(additionCount),
 		MultiplicationCount(multiplicationCount)
 	{
 	}
 };
 
-template<typename valueT, std::size_t N>
+template<typename valueT, size_t N>
 class StandardModuleFactory;
 
-template<typename valueT, std::size_t N>
+template<typename valueT, size_t N>
 class StandardModule : public ModuleBase<valueT> {
 
 private:
 
 	static const StandardModuleComplexity Complexity;
 
-	StandardModule(Phasors<valueT> const &phasors, std::size_t remainingLength, std::size_t twiddleStep) :
+	StandardModule(Phasors<valueT> const &phasors, size_t remainingLength, size_t twiddleStep) :
 		ModuleBase<valueT>(phasors, N, remainingLength, twiddleStep)
 	{
 	}
@@ -51,7 +51,7 @@ public:
 
 	using ModuleBase<valueT>::mLength;
 
-	virtual std::size_t Prepare(Storage<valueT> &) override
+	virtual size_t Prepare(Storage<valueT> &) override
 	{
 		return 0;
 	}
@@ -60,7 +60,7 @@ public:
 	{
 	}
 
-	virtual void Compute(valueT *pReal, valueT *pImag, std::ptrdiff_t stride, std::size_t twiddleStart, std::size_t twiddleIncrement) const override;
+	virtual void Compute(valueT *pReal, valueT *pImag, std::ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const override;
 };
 
 template<typename valueT>
@@ -73,17 +73,17 @@ protected:
 public:
 
 	virtual ~StandardModuleFactoryBase() { }
-	virtual std::unique_ptr<ModuleBase<valueT>> Construct(Phasors<valueT> const &phasors, std::size_t remainingLength, std::size_t twiddleStep) const = 0;
+	virtual std::unique_ptr<ModuleBase<valueT>> Construct(Phasors<valueT> const &phasors, size_t remainingLength, size_t twiddleStep) const = 0;
 	virtual StandardModuleComplexity GetComplexity() const = 0;
 };
 
-template<typename valueT, std::size_t N>
+template<typename valueT, size_t N>
 class StandardModuleFactory : public StandardModuleFactoryBase<valueT> {
 
 public:
 
 	StandardModuleFactory() { }
-	virtual std::unique_ptr<ModuleBase<valueT>> Construct(Phasors<valueT> const &phasors, std::size_t remainingLength, std::size_t twiddleStep) const override
+	virtual std::unique_ptr<ModuleBase<valueT>> Construct(Phasors<valueT> const &phasors, size_t remainingLength, size_t twiddleStep) const override
 	{
 		return std::unique_ptr<ModuleBase<valueT>>(new StandardModule<valueT, N>(phasors, remainingLength, twiddleStep));
 	}

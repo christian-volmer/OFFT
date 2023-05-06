@@ -9,9 +9,6 @@
 namespace offt {
 namespace backend {
 
-using std::size_t;
-using std::ptrdiff_t;
-
 template class Storage<float>;
 template class Storage<double>;
 
