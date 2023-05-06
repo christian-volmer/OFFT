@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\backend\fourier_base.cpp" />
+    <ClCompile Include="src\backend\module_base.cpp" />
     <ClCompile Include="src\backend\module_manager.cpp" />
     <ClCompile Include="src\backend\phasors.cpp" />
     <ClCompile Include="src\backend\program.cpp" />
