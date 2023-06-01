@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      4855,        135]
-NotebookOptionsPosition[      4318,        119]
-NotebookOutlinePosition[      4718,        135]
-CellTagsIndexPosition[      4675,        132]
+NotebookDataLength[      5157,        146]
+NotebookOptionsPosition[      4492,        127]
+NotebookOutlinePosition[      4892,        143]
+CellTagsIndexPosition[      4849,        140]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -25,7 +25,7 @@ Cell[BoxData[
   RowBox[{"ListConvolve", "[", 
    RowBox[{"a", ",", "b", ",", "1"}], "]"}]}]], "Input",
  CellLabel->
-  "In[2484]:=",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
+  "In[3213]:=",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
 
 Cell[BoxData[
  RowBox[{
@@ -70,8 +70,7 @@ Cell[BoxData[
      "\[IndentingNewLine]", "\[IndentingNewLine]", 
      RowBox[{"convolutionKernel", "=", 
       RowBox[{"Exp", "[", 
-       RowBox[{
-        RowBox[{"-", "2"}], "\[Pi]", " ", "I", " ", 
+       RowBox[{"2", "\[Pi]", " ", "I", " ", 
         RowBox[{"inversePermutation", "/", "n"}]}], "]"}]}], ";", 
      "\[IndentingNewLine]", "\[IndentingNewLine]", 
      RowBox[{"output", "=", 
@@ -85,7 +84,9 @@ Cell[BoxData[
       RowBox[{"output", "\[LeftDoubleBracket]", 
        RowBox[{"1", "+", "inversePermutation"}], "\[RightDoubleBracket]"}], 
       "=", 
-      RowBox[{"1", "+", 
+      RowBox[{
+       RowBox[{
+       "samples", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], "+", 
        RowBox[{"ListCyclicConvolve", "[", 
         RowBox[{
          RowBox[{"samples", "\[LeftDoubleBracket]", 
@@ -93,31 +94,38 @@ Cell[BoxData[
           ",", "convolutionKernel"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
      "output"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
  CellLabel->
-  "In[3049]:=",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
+  "In[3230]:=",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
+
+Cell[CellGroupData[{
 
 Cell[BoxData[{
  RowBox[{
   RowBox[{"x", "=", 
-   RowBox[{"{", 
-    RowBox[{"1", ",", "2", ",", 
-     RowBox[{"3", "-", 
-      RowBox[{"2", "I"}]}], ",", "4", ",", 
-     RowBox[{"5", "+", "I"}], ",", "1", ",", "1", ",", 
-     RowBox[{"I", "+", "1"}], ",", 
-     RowBox[{"I", "+", "1"}], ",", "2", ",", 
-     RowBox[{
-      RowBox[{"-", "5"}], "+", "I"}], ",", 
-     RowBox[{"7", "I"}], ",", 
-     RowBox[{"6", "-", 
-      RowBox[{"3", "I"}]}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+   RowBox[{"RandomComplex", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"-", "1"}], "-", "I"}], ",", 
+       RowBox[{"1", "+", "I"}]}], "}"}], ",", "13"}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
  RowBox[{"Chop", "[", 
   RowBox[{
    RowBox[{"RaderFourierTransform", "[", "x", "]"}], "-", 
    RowBox[{"Fourier", "[", "x", "]"}]}], "]"}]}], "Input",
  CellLabel->
-  "In[3064]:=",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"]
+  "In[3237]:=",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+  "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
+   ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellLabel->
+  "Out[3238]=",ExpressionUUID->"8e051f15-b9f3-40da-997c-3edd086d7f64"]
+}, Open  ]]
 },
-WindowSize->{1350, 709},
+WindowSize->{1350, 669},
 WindowMargins->{{0, Automatic}, {Automatic, 0}},
 FrontEndVersion->"13.0 for Microsoft Windows (64-bit) (February 4, 2022)",
 StyleDefinitions->"Default.nb",
@@ -135,8 +143,11 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[558, 20, 278, 7, 29, "Input",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
-Cell[839, 29, 2752, 66, 410, "Input",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
-Cell[3594, 97, 720, 20, 50, "Input",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"]
+Cell[839, 29, 2814, 67, 410, "Input",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
+Cell[CellGroupData[{
+Cell[3678, 100, 521, 16, 50, "Input",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"],
+Cell[4202, 118, 274, 6, 33, "Output",ExpressionUUID->"8e051f15-b9f3-40da-997c-3edd086d7f64"]
+}, Open  ]]
 }
 ]
 *)
