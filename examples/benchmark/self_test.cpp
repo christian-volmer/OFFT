@@ -44,7 +44,7 @@ bool SelfTestForType()
 		failure = TestLength<T>(length) || failure;
 
 	std::cout << "  Some prime lengths...\n";
-    for (int length = 10001; length < 10500; length += 2) {
+    for (int length = 1001; length < 10500; length += 2) {
 
 		if (offt::math::PrimeQ(length))
 			failure = TestLength<T>(length) || failure;
