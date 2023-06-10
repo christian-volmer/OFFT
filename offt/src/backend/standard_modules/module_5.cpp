@@ -10,71 +10,86 @@ namespace offt {
 namespace backend {
 
 /*
-	Number of additions       : 34
-	Number of multiplications : 10
+	Number of additions       : 0
+	Number of multiplications : 0
 */
 
-template<> StandardModuleComplexity const StandardModule<float, 5>::Complexity = { 34, 10 };
-template<> StandardModuleComplexity const StandardModule<double, 5>::Complexity = { 34, 10 };
+template<> StandardModuleComplexity const StandardModule<float, 5>::Complexity = { 0, 0 };
+template<> StandardModuleComplexity const StandardModule<double, 5>::Complexity = { 0, 0 };
 
 template<typename valueT>
 static void ComputeCore(Phasors<valueT> const &phasors, valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement)
 {
-	valueT t0, t1, t2, t3, t4, t5, t6, t7, t8, t9;
-	valueT t10, t11, t12, t13;
+	valueT r5, i5, r7, i7, r10, i10, r8, i8, r14, i14;
+	valueT r15, i15, r17, i17, r27, i27, r33, i33, r38, i38;
+	valueT r39, i39, r37, i37;
 
-	phasors.Multiply(t0, t1, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
-	phasors.Multiply(t2, t3, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
-	phasors.Multiply(t4, t5, pReal[2 * stride], pImag[2 * stride], twiddleStart + 2 * twiddleIncrement);
-	phasors.Multiply(t6, t7, pReal[3 * stride], pImag[3 * stride], twiddleStart + 3 * twiddleIncrement);
-	phasors.Multiply(t8, t9, pReal[4 * stride], pImag[4 * stride], twiddleStart + 4 * twiddleIncrement);
-
-	t10 = t2 - t8;
-	t11 = t3 - t9;
-	t2 += t8;
-	t3 += t9;
-	t8 = t4 - t6;
-	t9 = t5 - t7;
-	t4 += t6;
-	t5 += t7;
-	t6 = t10 - t8;
-	t7 = t11 - t9;
-	t12 = t2 - t4;
-	t13 = t3 - t5;
-	t2 += t4;
-	t3 += t5;
-	t0 += t2;
-	t1 += t3;
-	t11 *= valueT(1.5388417685876267013);
-	t10 *= valueT(1.5388417685876267013);
-	t7 *= valueT(0.58778525229247312917);
-	t6 *= valueT(0.58778525229247312917);
-	t12 *= valueT(0.5590169943749474241);
-	t13 *= valueT(0.5590169943749474241);
-	t2 *= valueT(1.25);
-	t3 *= valueT(1.25);
-	t9 *= valueT(0.36327126400268044295);
-	t8 *= valueT(0.36327126400268044295);
-	t2 = t0 - t2;
-	t3 = t1 - t3;
-	t4 = t2 - t12;
-	t5 = t3 - t13;
-	t2 += t12;
-	t3 += t13;
-	t11 -= t7;
-	t10 -= t6;
-	t7 -= t9;
-	t6 -= t8;
-	pReal[0 * stride] = t0;
-	pImag[0 * stride] = t1;
-	pReal[1 * stride] = t2 - t11;
-	pImag[1 * stride] = t3 + t10;
-	pReal[2 * stride] = t4 - t7;
-	pImag[2 * stride] = t5 + t6;
-	pReal[3 * stride] = t4 + t7;
-	pImag[3 * stride] = t5 - t6;
-	pReal[4 * stride] = t2 + t11;
-	pImag[4 * stride] = t3 - t10;
+	phasors.Multiply(r5, i5, pReal[4 * stride], pImag[4 * stride], twiddleStart + 4 * twiddleIncrement);
+	{
+		valueT s1r, s1i;
+		phasors.Multiply(s1r, s1i, pReal[1 * stride], pImag[1 * stride], twiddleStart + 1 * twiddleIncrement);
+		r7 = s1r - r5;
+		i7 = s1i - i5;
+		r10 = r5 + s1r;
+		i10 = i5 + s1i;
+	}
+	{
+		valueT s1r, s1i, s2r, s2i, s3r, s3i;
+		phasors.Multiply(s1r, s1i, pReal[2 * stride], pImag[2 * stride], twiddleStart + 2 * twiddleIncrement);
+		phasors.Multiply(s2r, s2i, pReal[3 * stride], pImag[3 * stride], twiddleStart + 3 * twiddleIncrement);
+		r8 = s1r - s2r;
+		i8 = s1i - s2i;
+		s3r = s1r + s2r;
+		s3i = s1i + s2i;
+		r14 = s3r - r10;
+		i14 = s3i - i10;
+		r15 = r10 + s3r;
+		i15 = i10 + s3i;
+	}
+	{
+		valueT s1r, s1i;
+		phasors.Multiply(s1r, s1i, pReal[0 * stride], pImag[0 * stride], twiddleStart + 0 * twiddleIncrement);
+		r17 = r15 + s1r;
+		i17 = i15 + s1i;
+		r27 = valueT(-1.25) * r15;
+		i27 = valueT(-1.25) * i15;
+	}
+	pReal[0 * stride] = r17;
+	pImag[0 * stride] = i17;
+	r33 = r17 + r27;
+	i33 = i17 + i27;
+	{
+		valueT s1r, s1i;
+		s1r = valueT(-0.5590169943749474241) * r14;
+		s1i = valueT(-0.5590169943749474241) * i14;
+		r38 = s1r - r33;
+		i38 = s1i - i33;
+		r39 = r33 + s1r;
+		i39 = i33 + s1i;
+	}
+	{
+		valueT s1r, s1i, s2r, s2i, s3r, s3i, s4r, s4i, s5r, s5i;
+		s1r = valueT(0.36327126400268044295) * i8;
+		s1i = valueT(-0.36327126400268044295) * r8;
+		s2r = r7 - r8;
+		s2i = i7 - i8;
+		s3r = valueT(-1.5388417685876267013) * i7;
+		s3i = valueT(1.5388417685876267013) * r7;
+		s4r = valueT(0.58778525229247312917) * s2i;
+		s4i = valueT(-0.58778525229247312917) * s2r;
+		r37 = s1r - s4r;
+		i37 = s1i - s4i;
+		s5r = s3r + s4r;
+		s5i = s3i + s4i;
+		pReal[4 * stride] = r39 - s5r;
+		pImag[4 * stride] = i39 - s5i;
+		pReal[1 * stride] = r39 + s5r;
+		pImag[1 * stride] = i39 + s5i;
+	}
+	pReal[3 * stride] = -r38 - r37;
+	pImag[3 * stride] = -i38 - i37;
+	pReal[2 * stride] = r37 - r38;
+	pImag[2 * stride] = i37 - i38;
 }
 
 template<> void StandardModule<float, 5>::Compute(float *pReal, float *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const

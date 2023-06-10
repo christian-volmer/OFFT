@@ -10,22 +10,42 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[      5157,        146]
-NotebookOptionsPosition[      4492,        127]
-NotebookOutlinePosition[      4892,        143]
-CellTagsIndexPosition[      4849,        140]
+NotebookDataLength[     24822,        631]
+NotebookOptionsPosition[     23390,        599]
+NotebookOutlinePosition[     23790,        615]
+CellTagsIndexPosition[     23747,        612]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 Cell[BoxData[
  RowBox[{
-  RowBox[{"ListCyclicConvolve", "[", 
-   RowBox[{"a_", ",", "b_"}], "]"}], ":=", 
-  RowBox[{"ListConvolve", "[", 
-   RowBox[{"a", ",", "b", ",", "1"}], "]"}]}]], "Input",
- CellLabel->
-  "In[3213]:=",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
+  RowBox[{"SetOptions", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"Fourier", ",", "InverseFourier", ",", "FourierMatrix"}], "}"}], 
+    ",", 
+    RowBox[{"FourierParameters", "->", 
+     RowBox[{"{", 
+      RowBox[{"1", ",", "1"}], "}"}]}]}], "]"}], ";"}]], "Input",
+ CellLabel->"In[11]:=",ExpressionUUID->"f6ea56eb-0e1f-477d-8495-39fd4ee750f1"],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"ListCyclicConvolve", "[", 
+    RowBox[{"a_", ",", "b_"}], "]"}], ":=", 
+   RowBox[{"ListConvolve", "[", 
+    RowBox[{"a", ",", "b", ",", "1"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"CyclicConvolutionMatrix", "[", "kernel_", "]"}], ":=", 
+   RowBox[{"ToeplitzMatrix", "[", 
+    RowBox[{"kernel", ",", 
+     RowBox[{"RotateRight", "[", 
+      RowBox[{"Reverse", "[", "kernel", "]"}], "]"}]}], "]"}]}], 
+  ";"}]}], "Input",
+ CellLabel->"In[12]:=",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
 
 Cell[BoxData[
  RowBox[{
@@ -82,19 +102,63 @@ Cell[BoxData[
       RowBox[{"Total", "[", "samples", "]"}]}], ";", "\[IndentingNewLine]", 
      RowBox[{
       RowBox[{"output", "\[LeftDoubleBracket]", 
-       RowBox[{"1", "+", "inversePermutation"}], "\[RightDoubleBracket]"}], 
-      "=", 
+       RowBox[{"2", ";;"}], "\[RightDoubleBracket]"}], "=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+         "samples", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+         "+", 
+         RowBox[{"ListCyclicConvolve", "[", 
+          RowBox[{
+           RowBox[{"samples", "\[LeftDoubleBracket]", 
+            RowBox[{"1", "+", "forwardPermutation"}], 
+            "\[RightDoubleBracket]"}], ",", "convolutionKernel"}], "]"}]}], 
+        ")"}], ".", 
+       RowBox[{
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], "\[LeftDoubleBracket]", 
+        "inversePermutation", "\[RightDoubleBracket]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"output", "\[LeftDoubleBracket]", 
+       RowBox[{"2", ";;"}], "\[RightDoubleBracket]"}], "=", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{
+         "samples", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], 
+         "+", 
+         RowBox[{
+          RowBox[{"CyclicConvolutionMatrix", "[", "convolutionKernel", "]"}], 
+          ".", 
+          RowBox[{"samples", "\[LeftDoubleBracket]", 
+           RowBox[{"1", "+", "forwardPermutation"}], 
+           "\[RightDoubleBracket]"}]}]}], ")"}], ".", 
+       RowBox[{
+        RowBox[{"IdentityMatrix", "[", 
+         RowBox[{"n", "-", "1"}], "]"}], "\[LeftDoubleBracket]", 
+        "inversePermutation", "\[RightDoubleBracket]"}]}]}], ";", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"output", "\[LeftDoubleBracket]", 
+       RowBox[{"2", ";;"}], "\[RightDoubleBracket]"}], "=", 
       RowBox[{
        RowBox[{
        "samples", "\[LeftDoubleBracket]", "1", "\[RightDoubleBracket]"}], "+", 
-       RowBox[{"ListCyclicConvolve", "[", 
-        RowBox[{
-         RowBox[{"samples", "\[LeftDoubleBracket]", 
-          RowBox[{"1", "+", "forwardPermutation"}], "\[RightDoubleBracket]"}],
-          ",", "convolutionKernel"}], "]"}]}]}], ";", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"Transpose", "[", 
+         RowBox[{
+          RowBox[{"IdentityMatrix", "[", 
+           RowBox[{"n", "-", "1"}], "]"}], "\[LeftDoubleBracket]", 
+          "inversePermutation", "\[RightDoubleBracket]"}], "]"}], ".", 
+        RowBox[{"CyclicConvolutionMatrix", "[", "convolutionKernel", "]"}], 
+        ".", 
+        RowBox[{"samples", "\[LeftDoubleBracket]", 
+         RowBox[{"1", "+", "forwardPermutation"}], 
+         "\[RightDoubleBracket]"}]}]}]}], ";", "\[IndentingNewLine]", 
      "output"}]}], "\[IndentingNewLine]", "]"}]}]], "Input",
- CellLabel->
-  "In[3230]:=",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
+ CellLabel->"In[14]:=",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
 
 Cell[CellGroupData[{
 
@@ -113,16 +177,424 @@ Cell[BoxData[{
   RowBox[{
    RowBox[{"RaderFourierTransform", "[", "x", "]"}], "-", 
    RowBox[{"Fourier", "[", "x", "]"}]}], "]"}]}], "Input",
- CellLabel->
-  "In[3237]:=",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"],
+ CellLabel->"In[15]:=",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"],
 
 Cell[BoxData[
  RowBox[{"{", 
   RowBox[{
   "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", ",", "0", 
    ",", "0", ",", "0", ",", "0", ",", "0", ",", "0"}], "}"}]], "Output",
+ CellLabel->"Out[16]=",ExpressionUUID->"4e030f8e-9659-4701-ba0d-2f6b7eb0a2d6"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"RaderFourierTransformMatrix", "[", "n_", "]"}], ":=", 
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", "\[IndentingNewLine]", 
+      RowBox[{
+      "g", ",", "gi", ",", "forwardPermutation", ",", "inversePermutation", 
+       ",", "output", ",", "convolutionKernel", ",", "m"}], 
+      "\[IndentingNewLine]", "}"}], ",", "\[IndentingNewLine]", 
+     "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{"!", 
+         RowBox[{"PrimeQ", "[", "n", "]"}]}], ",", 
+        RowBox[{"Return", "[", "$Failed", "]"}]}], "]"}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"g", "=", 
+       RowBox[{"PrimitiveRoot", "[", "n", "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"gi", "=", 
+       RowBox[{"PowerMod", "[", 
+        RowBox[{"g", ",", 
+         RowBox[{"-", "1"}], ",", "n"}], "]"}]}], ";", "\[IndentingNewLine]", 
+      "\[IndentingNewLine]", 
+      RowBox[{"forwardPermutation", "=", 
+       RowBox[{"PowerMod", "[", 
+        RowBox[{"g", ",", 
+         RowBox[{"Range", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"n", "-", "2"}]}], "]"}], ",", "n"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", 
+      RowBox[{"inversePermutation", "=", 
+       RowBox[{"PowerMod", "[", 
+        RowBox[{"gi", ",", 
+         RowBox[{"Range", "[", 
+          RowBox[{"0", ",", 
+           RowBox[{"n", "-", "2"}]}], "]"}], ",", "n"}], "]"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"convolutionKernel", "=", 
+       RowBox[{"Exp", "[", 
+        RowBox[{"2", "\[Pi]", " ", "I", " ", 
+         RowBox[{"inversePermutation", "/", "n"}]}], "]"}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"m", "=", 
+       RowBox[{
+        RowBox[{"Transpose", "[", 
+         RowBox[{
+          RowBox[{"IdentityMatrix", "[", 
+           RowBox[{"n", "-", "1"}], "]"}], "\[LeftDoubleBracket]", 
+          "inversePermutation", "\[RightDoubleBracket]"}], "]"}], ".", 
+        RowBox[{"CyclicConvolutionMatrix", "[", "convolutionKernel", "]"}], 
+        ".", 
+        RowBox[{
+         RowBox[{"IdentityMatrix", "[", 
+          RowBox[{"n", "-", "1"}], "]"}], "\[LeftDoubleBracket]", 
+         "forwardPermutation", "\[RightDoubleBracket]"}]}]}], ";", 
+      "\[IndentingNewLine]", "\[IndentingNewLine]", 
+      RowBox[{"Grid", "[", 
+       RowBox[{"{", 
+        RowBox[{"MatrixForm", "/@", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"FourierMatrix", "[", "n", "]"}], ",", "m"}], "}"}]}], 
+        "}"}], "]"}]}]}], "\[IndentingNewLine]", "]"}]}], 
+  "\[IndentingNewLine]"}], "\[IndentingNewLine]", 
+ RowBox[{"RaderFourierTransformMatrix", "[", "7", "]"}]}], "Input",
+ CellLabel->"In[17]:=",ExpressionUUID->"a5d2b51c-cd5b-4fbb-9ead-a99dd02a11ea"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {"1", "1", "1", "1", "1", "1", "1"},
+         {"1", 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]]},
+         {"1", 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]]},
+         {"1", 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]]},
+         {"1", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]]},
+         {"1", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]]},
+         {"1", 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]]}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]], 
+     TagBox[
+      RowBox[{"(", "\[NoBreak]", GridBox[{
+         {
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]]},
+         {
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]]},
+         {
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]]},
+         {
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]]},
+         {
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]]},
+         {
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           RowBox[{"-", 
+            FractionBox[
+             RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]}]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"6", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"4", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]], 
+          SuperscriptBox["\[ExponentialE]", 
+           FractionBox[
+            RowBox[{"2", " ", "\[ImaginaryI]", " ", "\[Pi]"}], "7"]]}
+        },
+        GridBoxAlignment->{"Columns" -> {{Center}}, "Rows" -> {{Baseline}}},
+        GridBoxSpacings->{"Columns" -> {
+            Offset[0.27999999999999997`], {
+             Offset[0.7]}, 
+            Offset[0.27999999999999997`]}, "Rows" -> {
+            Offset[0.2], {
+             Offset[0.4]}, 
+            Offset[0.2]}}], "\[NoBreak]", ")"}],
+      Function[BoxForm`e$, 
+       MatrixForm[BoxForm`e$]]]}
+   },
+   AutoDelete->False,
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellLabel->"Out[18]=",ExpressionUUID->"50132212-e597-4e0a-a824-a36f3af8aa0d"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Normal", "[", 
+   RowBox[{
+    RowBox[{"cyclic", "[", "4", "]"}], "[", "\"\<InputTransformation\>\"", 
+    "]"}], "]"}], "//", "MatrixForm"}]], "Input",
+ CellLabel->"In[8]:=",ExpressionUUID->"fef6b992-706d-42d1-b3e4-39f17d67eae1"],
+
+Cell[BoxData[
+ TagBox[
+  RowBox[{
+   RowBox[{"cyclic", "[", "4", "]"}], "[", "\<\"InputTransformation\"\>", 
+   "]"}],
+  Function[BoxForm`e$, 
+   MatrixForm[BoxForm`e$]]]], "Output",
  CellLabel->
-  "Out[3238]=",ExpressionUUID->"8e051f15-b9f3-40da-997c-3edd086d7f64"]
+  "Out[8]//MatrixForm=",ExpressionUUID->"ef7ede46-712f-43b9-8969-\
+9044bcae32f8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Transpose", "/@", 
+  RowBox[{"Reverse", "[", 
+   RowBox[{"c", "[", "\"\<InputTransformation\>\"", "]"}], "]"}]}]], "Input",
+ CellLabel->"In[9]:=",ExpressionUUID->"dccb922a-8af9-47ef-9f99-a38394211752"],
+
+Cell[BoxData[
+ RowBox[{"c", "[", 
+  RowBox[{"Transpose", "[", "\<\"InputTransformation\"\>", "]"}], 
+  "]"}]], "Output",
+ CellLabel->"Out[9]=",ExpressionUUID->"0b0ca4e9-4f63-45fb-a751-ee467768c277"]
 }, Open  ]]
 },
 WindowSize->{1350, 669},
@@ -142,11 +614,24 @@ CellTagsIndex->{}
 *)
 (*NotebookFileOutline
 Notebook[{
-Cell[558, 20, 278, 7, 29, "Input",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
-Cell[839, 29, 2814, 67, 410, "Input",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
+Cell[558, 20, 376, 10, 29, "Input",ExpressionUUID->"f6ea56eb-0e1f-477d-8495-39fd4ee750f1"],
+Cell[937, 32, 582, 15, 50, "Input",ExpressionUUID->"5695b5d7-8de4-416d-b2cb-dc7cb6e20c2f"],
+Cell[1522, 49, 4586, 111, 450, "Input",ExpressionUUID->"e59f005a-5968-4226-b80d-df1ec9ef1385"],
 Cell[CellGroupData[{
-Cell[3678, 100, 521, 16, 50, "Input",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"],
-Cell[4202, 118, 274, 6, 33, "Output",ExpressionUUID->"8e051f15-b9f3-40da-997c-3edd086d7f64"]
+Cell[6133, 164, 516, 15, 50, "Input",ExpressionUUID->"d5908658-f213-4e76-a1ab-036730b4fb2f"],
+Cell[6652, 181, 269, 5, 33, "Output",ExpressionUUID->"4e030f8e-9659-4701-ba0d-2f6b7eb0a2d6"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[6958, 191, 2841, 68, 410, "Input",ExpressionUUID->"a5d2b51c-cd5b-4fbb-9ead-a99dd02a11ea"],
+Cell[9802, 261, 12527, 298, 201, "Output",ExpressionUUID->"50132212-e597-4e0a-a824-a36f3af8aa0d"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22366, 564, 265, 6, 29, "Input",ExpressionUUID->"fef6b992-706d-42d1-b3e4-39f17d67eae1"],
+Cell[22634, 572, 277, 9, 46, "Output",ExpressionUUID->"ef7ede46-712f-43b9-8969-9044bcae32f8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[22948, 586, 225, 4, 29, "Input",ExpressionUUID->"dccb922a-8af9-47ef-9f99-a38394211752"],
+Cell[23176, 592, 198, 4, 33, "Output",ExpressionUUID->"0b0ca4e9-4f63-45fb-a751-ee467768c277"]
 }, Open  ]]
 }
 ]

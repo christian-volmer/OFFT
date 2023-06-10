@@ -43,8 +43,6 @@ public:
 
 	size_t GetLength() const;
 
-	/*
-
 	void Load(realT &twiddleR, realT &twiddleI, size_t index) const
 	{
 		complexT small = mSmallPhasors[index % SPLIT_LENGTH];
@@ -66,8 +64,6 @@ public:
 			twiddleI = sr * li + si * lr;
 		}
 	}
-
-	*/
 
 	void Multiply(realT &destR, realT &destI, realT const &srcR, realT const &srcI, size_t index) const
 	{
@@ -100,13 +96,6 @@ public:
 			}
 		}
 	}
-
-	/*
-
-	void Twiddle(realT *t, realT const *real, realT const *imag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement, size_t length) const;
-	void TwiddleInplace(realT *real, realT *imag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement, size_t length) const;
-
-	*/
 };
 
 }
