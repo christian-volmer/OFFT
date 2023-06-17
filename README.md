@@ -124,6 +124,9 @@ OFFT employs the following methods and algorithms
 ### Changes pending for the next release
 *(none)*
 
+### Version 0.3.0 (18 June 2023)
+ - Speed improvement by 10% to 20%.
+
 ### Version 0.2.0 (30 April 2023)
  - Speed of GCC compiled binary is now similar to Visual Studio
  - Added support for Visual Studio 2013
