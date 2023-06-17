@@ -5,10 +5,10 @@
 //          https://www.boost.org/LICENSE_1_0.txt)
 
 #include "rader_module.h"
-#include <offt/math/primitive_root.h>
 #include <offt/math/power_mod.h>
-#include <offt/math/times_plus_mod.h>
 #include <offt/math/prime_q.h>
+#include <offt/math/primitive_root.h>
+#include <offt/math/times_plus_mod.h>
 
 namespace offt {
 namespace backend {
@@ -35,7 +35,7 @@ size_t RaderModule<valueT>::Prepare(Storage<valueT> &storage)
 	size_t convolutionLength = mLength - 1;
 	mConvolutionProgram.Prepare(storage, convolutionLength);
 	size_t convolutionTempRequirement = mConvolutionProgram.GetTempRequirement();
-	 
+
 	RaderData<valueT> *raderData = &storage.GetRaderData(mLength);
 
 	if (raderData->mCoefficients.empty()) {
@@ -49,7 +49,7 @@ size_t RaderModule<valueT>::Prepare(Storage<valueT> &storage)
 		// Compute the kernel of the convolution used by the Rader method
 		for (ptrdiff_t i = 0, ggi = 1; static_cast<size_t>(i) < mLength - 1; ++i) {
 
-			mPhasors.Multiply(raderData->mCoefficients[2*i + 0], raderData->mCoefficients[2*i + 1], 1, 0, phasorStep * ggi);
+			mPhasors.Multiply(raderData->mCoefficients[2 * i + 0], raderData->mCoefficients[2 * i + 1], 1, 0, phasorStep * ggi);
 			ggi = math::TimesPlusMod(ggi, gi, 0, mLength);
 		}
 
@@ -96,7 +96,6 @@ void RaderModule<valueT>::SetTemp(valueT *pTemp)
 		mConvolutionProgram.SetTemp(nullptr);
 }
 
-
 template<typename valueT>
 void RaderModule<valueT>::Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride, size_t twiddleStart, size_t twiddleIncrement) const
 {
@@ -105,12 +104,12 @@ void RaderModule<valueT>::Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride
 	// The first time-domain sample is processed separately.
 	mPhasors.Multiply(twiddledReal0, twiddledImag0, pReal[0], pImag[0], twiddleStart);
 
-	// The Rader permutation is applied to all but the first time-domain 
+	// The Rader permutation is applied to all but the first time-domain
 	// samples -- along with the twiddling.
 	for (size_t i = 1; i < mLength; ++i) {
 
 		mPhasors.Multiply(
-			mpTemp[2 * mRaderData->mPermutation[i] + 0], mpTemp[2 * mRaderData->mPermutation[i] + 1], 
+			mpTemp[2 * mRaderData->mPermutation[i] + 0], mpTemp[2 * mRaderData->mPermutation[i] + 1],
 			pReal[i * stride], pImag[i * stride], twiddleStart + i * twiddleIncrement);
 	}
 
@@ -123,7 +122,7 @@ void RaderModule<valueT>::Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride
 	pReal[0 * stride] = twiddledReal0 + mpTemp[0];
 	pImag[0 * stride] = twiddledImag0 + mpTemp[1];
 
-	// Do the Rader convolution in frequency-domain by multiplying with the 
+	// Do the Rader convolution in frequency-domain by multiplying with the
 	// coefficients we precomputed earlier.
 	for (size_t i = 0; i < mConvolutionProgram.GetLength(); ++i) {
 
@@ -145,9 +144,9 @@ void RaderModule<valueT>::Compute(valueT *pReal, valueT *pImag, ptrdiff_t stride
 	// Transform back to time-domain
 	mConvolutionProgram.ExecuteInPlaceOutOfOrderTime(&mpTemp[0], &mpTemp[1], 2);
 
-	// Incidentally, the way we transformed to and from the frequency-domain 
-	// leaves the result of the convolution in reversed order. This allows us 
-	// to use the precomputed permutation during both the input and the output 
+	// Incidentally, the way we transformed to and from the frequency-domain
+	// leaves the result of the convolution in reversed order. This allows us
+	// to use the precomputed permutation during both the input and the output
 	// permutation stage of Rader's algorithm.
 	for (size_t i = 1; i < mLength; ++i) {
 

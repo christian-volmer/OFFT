@@ -89,89 +89,12 @@ std::unique_ptr<ModuleBase<valueT>> ModuleManager<valueT>::ConstructModule(Phaso
 }
 
 template<typename valueT>
-size_t ModuleManager<valueT>::CostForLength(size_t length) const
-{
-	/*
-
-	// Attempt to predict runtime based on standard module complexity failed. Well, this was mainly fiddling around without too much thinking...
-
-	size_t bestCost = 0;
-	for (auto const &module : mStandardModules) {
-
-		size_t moduleFactor = module.first;
-
-		if (length % moduleFactor == 0) {
-
-			size_t remainingLength = length / moduleFactor;
-			size_t remainingCost = CostForLength(remainingLength);
-
-			StandardModuleComplexity complexity = module.second->GetComplexity();
-			size_t moduleCost = complexity.AdditionCount + complexity.MultiplicationCount;
-
-			size_t thisCost = moduleCost * remainingLength + moduleFactor * remainingCost;
-
-			if (bestCost == 0 || thisCost < bestCost) {
-
-				bestCost = thisCost;
-			}
-		}
-	}
-	*/
-
-	return 4 * length;
-}
-
-template<typename valueT>
 std::vector<size_t> ModuleManager<valueT>::Factorise(size_t length) const
 {
 	if (!(length >= 1))
 		throw std::invalid_argument("ModuleManager::Factorise(): parameter 'length' must be greater than or equal to '1'.");
 
 	std::vector<size_t> factors;
-
-	/*
-
-	// Attempt to predict runtime based on standard module complexity failed. Well, this was mainly fiddling around without too much thinking...
-
-	bool doingStandardModules = true;
-	while (doingStandardModules) {
-
-		doingStandardModules = false;
-		size_t bestFactor = 0;
-		double bestCost = 0;
-		for (auto const &module : mStandardModules) {
-
-			size_t moduleFactor = module.first;
-
-			if (length % moduleFactor == 0) {
-
-				size_t remainingLength = length / moduleFactor;
-				double remainingCost = 20 * double(remainingLength) * std::log(double(remainingLength));
-
-				StandardModuleComplexity complexity = module.second->GetComplexity();
-				size_t moduleCost = complexity.AdditionCount + complexity.MultiplicationCount;
-
-				double thisCost = moduleCost * remainingLength + moduleFactor * remainingCost;
-
-				// std::cout << "Factor = " << moduleFactor << ": cost = " << thisCost << "\n";
-
-				if (bestCost == 0 || thisCost < bestCost) {
-
-					bestFactor = moduleFactor;
-					bestCost = thisCost;
-				}
-			}
-		}
-
-		if (bestFactor != 0) {
-
-			factors.push_back(bestFactor);
-			length /= bestFactor;
-			doingStandardModules = true;
-		}
-	}
-
-	*/
 
 	for (auto factorIt = mStandardModules.crbegin(); factorIt != mStandardModules.crend();) {
 
