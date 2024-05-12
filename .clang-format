@@ -1,9 +1,10 @@
 # https://clang.llvm.org/docs/ClangFormatStyleOptions.html
 Standard: Latest
 BasedOnStyle: WebKit 
-UseTab: Always
+UseTab: AlignWithSpaces
 TabWidth: 4
 IndentWidth: 4
+SortIncludes: Never
 NamespaceIndentation: None
 SpaceAfterTemplateKeyword: false
 RequiresExpressionIndentation: OuterScope
@@ -22,3 +23,5 @@ BreakBeforeBraces: Custom
 BraceWrapping:
   BeforeElse: true
   AfterFunction: true
+  BeforeCatch: true
+  
